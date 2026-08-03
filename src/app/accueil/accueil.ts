@@ -6,8 +6,11 @@ import { AvocatService } from '../services/avocat.service';
 import { Avocat } from '../models/avocat';
 
 
+
 @Component({
+
   selector: 'app-accueil',
+
   standalone: true,
 
   imports: [
@@ -15,11 +18,14 @@ import { Avocat } from '../models/avocat';
   ],
 
   templateUrl: './accueil.html',
-  styleUrl: './accueil.css',
+
+  styleUrl: './accueil.css'
+
 })
 
 
 export class Accueil {
+
 
 
   // Problème juridique choisi par l'utilisateur
@@ -27,44 +33,158 @@ export class Accueil {
 
 
 
+  // Ville choisie par l'utilisateur
+  villeSelectionnee = '';
+
+
+
+  // Afficher ou cacher la zone de recherche
+  afficherRecherche = false;
+
+
+
+
+
   constructor(
-    // Service qui récupère et partage les données des avocats
+
+
+
+    // Service qui récupère les données des avocats
     private avocatService: AvocatService,
 
-    // Service Angular utilisé pour changer de page
+
+
+    // Service Angular pour changer de page
     private router: Router
+
+
+
   ) {}
 
 
 
-  // Rechercher les avocats selon le problème choisi
+
+
+
+
+
+  // Affichage de la zone recherche
+
+  ouvrirRecherche() {
+
+
+    this.afficherRecherche = true;
+
+
+
+    setTimeout(() => {
+
+
+      this.scrollToSearch();
+
+
+    }, 100);
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  // Déplacer l'utilisateur vers la zone de recherche
+
+  scrollToSearch() {
+
+
+
+    const element = document.getElementById('search');
+
+
+
+    element?.scrollIntoView({
+
+
+      behavior: 'smooth',
+
+
+      block: 'start'
+
+
+    });
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  // Rechercher les avocats selon le problème et la ville
+
   chercherAvocat() {
 
 
+
     this.avocatService
-      .getAvocatsBySpecialite(this.problemeSelectionne)
+
+
+
+      .chercherAvocats(
+
+        this.problemeSelectionne,
+
+        this.villeSelectionnee
+
+      )
+
+
 
       .subscribe((data: Avocat[]) => {
 
 
-        // Vérifier les résultats dans la console
+
+
+        // Vérifier les résultats
+
         console.log(data);
 
 
 
-        // Sauvegarder les résultats de recherche
+
+
+        // Sauvegarder les résultats
+
         this.avocatService.setAvocatsRecherche(data);
 
 
 
-        // Aller vers la page de la liste des avocats
+
+
+        // Aller vers la page des avocats
+
         this.router.navigate(['/avocats']);
+
+
 
 
       });
 
 
+
   }
+
+
 
 
 }

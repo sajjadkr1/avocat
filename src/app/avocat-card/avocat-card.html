@@ -1,61 +1,141 @@
 <div class="card">
 
+
     <!-- Image de l'avocat -->
+
     <img
-        [src]="avocat.img"
+
+        [src]="'/' + avocat.img"
+
         [alt]="avocat.nom"
+
     >
 
+
+
+
+
     <!-- Informations principales -->
-    <h2>{{ avocat.nom }}</h2>
+
+    <h2>
+        {{ avocat.nom }}
+    </h2>
+
+
+
 
     <p>
+
         <strong>Spécialité :</strong>
+
         {{ avocat.specialite }}
+
     </p>
 
+
+
+
     <p>
+
         <strong>Ville :</strong>
+
         {{ avocat.ville }}
+
     </p>
 
+
+
+
     <p>
+
         <strong>Langues :</strong>
+
         {{ avocat.langues.join(', ') }}
+
     </p>
+
+
+
+
+
 
     <!-- Bouton -->
-    <button (click)="afficherDetails()">
+
+    <button 
+        (click)="afficherDetails()">
+
+
         Voir les informations
+
+
     </button>
 
+
+
+
+
+
     <!-- Détails -->
+
     <div *ngIf="detailsVisible">
+
 
         <hr>
 
-        <h3>Informations détaillées</h3>
+
+
+        <h3>
+            Informations détaillées
+        </h3>
+
+
+
 
         <p>
+
             <strong>Nom complet :</strong>
+
             {{ avocat.nom }}
+
         </p>
 
+
+
+
         <p>
+
             <strong>Spécialité :</strong>
+
             {{ avocat.specialite }}
+
         </p>
 
+
+
+
         <p>
+
             <strong>Ville :</strong>
+
             {{ avocat.ville }}
+
         </p>
 
+
+
+
         <p>
+
             <strong>Langues :</strong>
+
             {{ avocat.langues.join(', ') }}
+
         </p>
+
+
+
 
     </div>
+
 
 </div>

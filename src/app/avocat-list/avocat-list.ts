@@ -8,25 +8,20 @@ import { AvocatService } from '../services/avocat.service';
 
 
 @Component({
+
   selector: 'app-avocat-list',
 
-  // Ce composant est autonome, il ne dépend pas d'un module Angular
   standalone: true,
 
-
-  // Les modules et composants utilisés dans le fichier HTML
   imports: [
     CommonModule,
     AvocatCard
   ],
 
-
-  // Le fichier HTML associé au composant
   templateUrl: './avocat-list.html',
 
-
-  // Le fichier CSS associé au design du composant
   styleUrls: ['./avocat-list.css']
+
 })
 
 
@@ -48,8 +43,10 @@ export class AvocatList implements OnInit {
 
   constructor(
 
+
     // Injection du service qui contient les données des avocats
     private avocatService: AvocatService
+
 
   ) {}
 
@@ -57,25 +54,77 @@ export class AvocatList implements OnInit {
 
 
 
+
   // Méthode exécutée automatiquement au chargement du composant
+
   ngOnInit(): void {
 
 
 
     // Récupérer les résultats de recherche depuis le service
-    this.avocats = this.avocatService.getAvocatsRecherche();
+
+    const resultats = this.avocatService.getAvocatsRecherche();
 
 
 
-    // Vérifier les données reçues dans la console
-    console.log("DATA:", this.avocats);
+
+
+    if(resultats.length > 0) {
 
 
 
-    // Afficher le nombre des avocats trouvés
+      this.avocats = resultats;
+
+
+
+      console.log(
+        "RESULTATS RECHERCHE:",
+        this.avocats
+      );
+
+
+
+    } else {
+
+
+
+      // Récupérer tous les avocats depuis json-server
+
+
+      this.avocatService.getAvocats()
+
+      .subscribe((data: Avocat[]) => {
+
+
+
+        this.avocats = data;
+
+
+
+        console.log(
+          "DATA:",
+          this.avocats
+        );
+
+
+
+      });
+
+
+
+    }
+
+
+
+
+
+
     console.log(
+
       "Nombre des avocats:",
+
       this.avocats.length
+
     );
 
 
@@ -86,17 +135,23 @@ export class AvocatList implements OnInit {
 
 
 
+
+
+
   // Méthode appelée quand l'utilisateur clique sur un avocat
+
   showDetails(avocat: Avocat): void {
 
 
 
     // Stocker l'avocat choisi pour afficher ses détails
+
     this.selectedAvocat = avocat;
 
 
 
   }
+
 
 
 }

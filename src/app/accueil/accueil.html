@@ -1,31 +1,65 @@
 <section class="hero">
 
+
     <div class="hero-content">
 
+
         <h1>
-            Bienvenue sur LegalBridge
+            Trouvez un avocat adapté à votre situation
         </h1>
 
 
+
         <p>
-            LegalBridge est une plateforme qui aide
-            les étrangers en France à trouver un avocat
-            adapté à leur situation.
+            LegalBridge aide les étrangers en France 
+            à trouver un avocat adapté à leurs besoins.
         </p>
 
 
+
+
+        <button 
+            class="hero-btn" 
+            (click)="ouvrirRecherche()">
+
+
+            Commencer la recherche
+
+
+        </button>
+
+
+
     </div>
+
 
 </section>
 
 
 
+
+
 <!-- Zone de recherche -->
 
-<div class="search-container">
+@if (afficherRecherche) {
+
+
+
+<div 
+    id="search" 
+    class="search-container">
+
 
 
     <div class="search-box">
+
+
+
+        <h2>
+            Trouvez votre avocat
+        </h2>
+
+
 
 
         <label>
@@ -34,7 +68,9 @@
 
 
 
+
         <select [(ngModel)]="problemeSelectionne">
+
 
 
             <option value="">
@@ -42,9 +78,11 @@
             </option>
 
 
+
             <option value="immigration">
                 Droit des étrangers
             </option>
+
 
 
             <option value="demande d'asile">
@@ -52,9 +90,11 @@
             </option>
 
 
+
             <option value="logement">
                 Logement
             </option>
+
 
 
             <option value="travail">
@@ -62,18 +102,47 @@
             </option>
 
 
+
         </select>
 
+    
 
 
-        <button (click)="chercherAvocat()">
+        <label>
+            Votre ville
+        </label>
 
-            Trouver un avocat
+
+<input 
+    type="text"
+    placeholder="Ex: Paris"
+    [(ngModel)]="villeSelectionnee">
+
+    
+
+
+
+        <button 
+            class="search-btn"
+            (click)="chercherAvocat()">
+
+
+
+            Rechercher un avocat
+
+
 
         </button>
+
+
 
 
     </div>
 
 
+
 </div>
+
+
+
+}

@@ -1,0 +1,37 @@
+/* Style de la barre de navigation */
+
+.navbar {
+
+    background-color: #413c3c;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 30px;
+
+}
+
+
+/* Style des liens du menu */
+
+.navbar a {
+
+    color: white;
+
+    /* Supprimer le soulignement */
+    text-decoration: none;
+
+}
+
+
+/* Changer la couleur au passage de la souris */
+
+.navbar a:hover {
+
+    color: #d4af37; /* Couleur dorée */
+
+    text-decoration: none;
+
+}

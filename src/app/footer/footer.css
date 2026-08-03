@@ -1,0 +1,17 @@
+footer {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #413c3c;
+    color: white;
+
+    padding: 30px;
+    margin-top: 40px;
+
+}
+
+a:hover {
+    text-decoration: underline;
+}

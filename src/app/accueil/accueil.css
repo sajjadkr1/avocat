@@ -1,0 +1,117 @@
+/* 
+  Styles pour la page d'accueil
+  ============================
+*/
+
+
+.hero {
+
+    min-height: 350px;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.45),
+        rgba(0,0,0,0.45)
+    ),
+    url('/assets/img/justice.jpg');
+
+
+    background-size: cover;
+
+    background-position: center;
+
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+
+    text-align: center;
+
+    color: white;
+
+    padding: 40px;
+
+}
+
+
+
+.hero-content {
+
+    max-width: 650px;
+
+}
+
+
+
+.hero h1 {
+
+    font-size: 38px;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.hero p {
+
+    font-size: 18px;
+
+}
+
+
+
+
+/* ========================= */
+/* Recherche */
+/* ========================= */
+
+
+.search-container {
+
+
+    display: flex;
+
+    justify-content: center;
+
+
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+
+
+}
+
+
+
+.search-box {
+
+
+    width: 80%;
+
+
+    background: white;
+
+
+    padding: 25px;
+
+
+    border-radius: 15px;
+
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+
+
+    display: flex;
+
+
+    gap: 15px;
+
+
+    align-items: center;
+
+
+}

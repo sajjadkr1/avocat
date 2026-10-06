@@ -97,39 +97,47 @@ export class AvocatList implements OnInit {
 
 
 
-      this.avocatService.getAvocats()
+      const avocats$ = this.avocatService.getAvocats() as any;
 
-      .subscribe({
+      if (avocats$ && typeof avocats$.subscribe === 'function') {
 
-        next: (data: Avocat[]) => {
+        avocats$.subscribe({
 
-
-          this.avocats = data;
-
+          next: (data: Avocat[]) => {
 
 
-          console.log(
-            "Tous les avocats :",
-            this.avocats
-          );
+            this.avocats = data;
 
 
-        },
+
+            console.log(
+              "Tous les avocats :",
+              this.avocats
+            );
 
 
-        error: (err) => {
+          },
 
 
-          console.error(
-            "Erreur récupération des avocats :",
-            err
-          );
+          error: (err: unknown) => {
 
 
-        }
+            console.error(
+              "Erreur récupération des avocats :",
+              err
+            );
 
 
-      });
+          }
+
+
+        });
+
+      } else {
+
+        console.warn('Le service ne retourne pas un Observable pour getAvocats().');
+
+      }
 
 
 

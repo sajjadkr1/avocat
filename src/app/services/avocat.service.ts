@@ -9,6 +9,9 @@ import { Avocat } from '../models/avocat';
 })
 
 export class AvocatService {
+    getAvocats() {
+      throw new Error('Method not implemented.');
+    }
 
     // Adresse de notre API backend
     private apiUrl = 'http://localhost:5000/api/avocats';

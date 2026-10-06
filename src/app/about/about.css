@@ -1,0 +1,105 @@
+/* Conteneur principal de la page À propos */
+.about-container {
+    min-height: 80vh;
+    padding: 60px 20px;
+    background-color: #f7f7f7;
+}
+
+
+/* En-tête de la page */
+.about-header {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+.about-header h1 {
+    margin-bottom: 15px;
+    font-size: 36px;
+    color: #2c2c2c;
+}
+
+.about-header p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+}
+
+
+/* Contenu principal */
+.about-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+
+/* Sections d'information */
+.about-content section {
+    margin-bottom: 25px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.about-content h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #413c3c;
+}
+
+.about-content p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+}
+
+
+/* Tablette */
+@media (max-width: 768px) {
+
+    .about-container {
+        padding: 40px 20px;
+    }
+
+    .about-header h1 {
+        font-size: 30px;
+    }
+
+    .about-content section {
+        padding: 25px;
+    }
+
+}
+
+
+/* Téléphone */
+@media (max-width: 480px) {
+
+    .about-container {
+        padding: 30px 15px;
+    }
+
+    .about-header {
+        margin-bottom: 25px;
+    }
+
+    .about-header h1 {
+        font-size: 26px;
+    }
+
+    .about-header p {
+        font-size: 16px;
+    }
+
+    .about-content section {
+        padding: 20px;
+    }
+
+    .about-content h2 {
+        font-size: 21px;
+    }
+
+}

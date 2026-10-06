@@ -1,0 +1,155 @@
+@if (avocatDetail) {
+
+    <div class="detail-container">
+
+        <div class="detail-card">
+
+            <!-- Image avocat -->
+
+            <img
+                [src]="'/' + avocatDetail.img"
+                [alt]="'Photo de ' + avocatDetail.prenom + ' ' + avocatDetail.nom"
+                class="detail-image"
+            >
+
+
+            <!-- Informations -->
+
+            <div class="detail-info">
+
+                <h1>
+                    {{ avocatDetail.prenom }} {{ avocatDetail.nom }}
+                </h1>
+
+
+                <p>
+                    <strong>Spécialité :</strong>
+                    {{ avocatDetail.specialisation }}
+                </p>
+
+
+                <p>
+                    <strong>Ville :</strong>
+                    {{ avocatDetail.ville }}
+                </p>
+
+
+                <p>
+                    <strong>Langues :</strong>
+                    {{ avocatDetail.langues?.join(', ') }}
+                </p>
+
+
+                <p>
+                    <strong>Email :</strong>
+                    {{ avocatDetail.email || 'Non disponible' }}
+                </p>
+
+
+                <p>
+                    <strong>Téléphone :</strong>
+                    {{ avocatDetail.portable || 'Non disponible' }}
+                </p>
+
+
+                <p>
+                    <strong>Adresse :</strong>
+                    {{ avocatDetail.adresse || 'Non disponible' }}
+                </p>
+
+
+                <p>
+                    <strong>Description :</strong>
+                    {{ avocatDetail.description || 'Non disponible' }}
+                </p>
+
+
+                <button
+                    type="button"
+                    (click)="ouvrirRendezVous()"
+                >
+                    Prendre rendez-vous
+                </button>
+
+
+                @if (afficherRendezVous) {
+
+                    <div class="rendez-vous-form">
+
+                        <h2>
+                            Prendre rendez-vous avec
+                            {{ avocatDetail.prenom }} {{ avocatDetail.nom }}
+                        </h2>
+
+
+                        <label for="date-rendez-vous">
+                            Date du rendez-vous
+                        </label>
+
+                        <input
+                            id="date-rendez-vous"
+                            type="date"
+                            [(ngModel)]="date_rendez_vous"
+                        >
+
+
+                        <label for="heure-rendez-vous">
+                            Heure du rendez-vous
+                        </label>
+
+                        <input
+                            id="heure-rendez-vous"
+                            type="time"
+                            [(ngModel)]="heure_rendez_vous"
+                        >
+
+
+                        <label for="motif">
+                            Motif du rendez-vous
+                        </label>
+
+                        <textarea
+                            id="motif"
+                            name="motif"
+                            [(ngModel)]="motif"
+                        ></textarea>
+
+
+                        <button
+                            type="button"
+                            (click)="confirmerRendezVous()"
+                        >
+                            Confirmer le rendez-vous
+                        </button>
+
+                    </div>
+
+                }
+
+
+                @if (messageSucces) {
+
+                    <div
+                        class="success-message"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        {{ messageSucces }}
+                    </div>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+}
+@else {
+
+    <p class="loading-message" role="status">
+        Chargement...
+    </p>
+
+}

@@ -1,0 +1,142 @@
+/* Conteneur principal de la page Contact */
+.contact-container {
+    min-height: 80vh;
+    padding: 60px 20px;
+    background-color: #f7f7f7;
+}
+
+
+/* Titre et texte d'introduction */
+.contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #2c2c2c;
+}
+
+.contact-header p {
+    font-size: 17px;
+    color: #666;
+}
+
+
+/* Carte contenant le formulaire */
+.contact-card {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 35px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Groupe contenant label + champ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+
+/* Champs du formulaire */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+
+/* Focus clavier */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 3px solid #d4af37;
+    outline-offset: 2px;
+    border-color: #413c3c;
+}
+
+
+/* Bouton d'envoi */
+.contact-card button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 6px;
+    background-color: #413c3c;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.contact-card button:hover {
+    background-color: #2f2b2b;
+}
+
+.contact-card button:focus-visible {
+    outline: 3px solid #d4af37;
+    outline-offset: 3px;
+}
+
+
+/* Tablette */
+@media (max-width: 768px) {
+
+    .contact-container {
+        padding: 40px 20px;
+    }
+
+    .contact-header h1 {
+        font-size: 30px;
+    }
+
+    .contact-card {
+        padding: 25px;
+    }
+
+}
+
+
+/* Téléphone */
+@media (max-width: 480px) {
+
+    .contact-container {
+        padding: 30px 15px;
+    }
+
+    .contact-header {
+        margin-bottom: 25px;
+    }
+
+    .contact-header h1 {
+        font-size: 26px;
+    }
+
+    .contact-header p {
+        font-size: 15px;
+    }
+
+    .contact-card {
+        padding: 20px;
+    }
+
+}

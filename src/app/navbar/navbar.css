@@ -1,7 +1,8 @@
-/* Style de la barre de navigation */
+/* ==========================
+   BARRE DE NAVIGATION
+========================== */
 
 .navbar {
-
     background-color: #413c3c;
     color: white;
 
@@ -10,28 +11,199 @@
     align-items: center;
 
     padding: 30px;
-
+    position: relative;
 }
 
 
-/* Style des liens du menu */
+/* ==========================
+   LISTE DU MENU
+========================== */
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================
+   LIENS DU MENU
+========================== */
 
 .navbar a {
-
     color: white;
 
-    /* Supprimer le soulignement */
     text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.navbar a:hover {
+    color: #d4af37;
+
+    text-decoration: none;
+}
+
+
+/* ==========================
+   NAVIGATION AU CLAVIER
+========================== */
+
+.navbar a:focus-visible {
+    outline: 3px solid #ffffff;
+
+    outline-offset: 4px;
+
+    border-radius: 4px;
+}
+
+
+/* ==========================
+   LOGO
+========================== */
+
+.logo img {
+    width: 60px;
+    height: 60px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* ==========================
+   RENDEZ-VOUS
+========================== */
+
+.rendez-vous-popup {
+    position: absolute;
+
+    top: 70px;
+    right: 20px;
+
+    width: 360px;
+    max-height: 420px;
+
+    overflow: auto;
+
+    background: #1f1f1f;
+    color: white;
+
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    padding: 12px 0;
+
+    z-index: 1000;
+}
+
+
+.rendez-vous-item {
+    padding: 14px 18px;
+
+    border-bottom: 1px solid #3a3a3a;
+}
+
+
+.rendez-vous-item:last-child {
+    border-bottom: none;
+}
+
+
+.rendez-vous-item:hover {
+    background: #2a2a2a;
+}
+
+
+
+/* ==========================
+   TABLETTE
+   1024px ET MOINS
+========================== */
+
+@media (max-width: 1024px) {
+
+    .navbar {
+        padding: 20px;
+    }
+
+
+    .navbar ul {
+        gap: 15px;
+    }
+
+
+    .navbar a {
+        font-size: 14px;
+    }
+
+
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
 
 }
 
 
-/* Changer la couleur au passage de la souris */
 
-.navbar a:hover {
+/* ==========================
+   TÉLÉPHONE
+   768px ET MOINS
+========================== */
 
-    color: #d4af37; /* Couleur dorée */
+@media (max-width: 768px) {
 
-    text-decoration: none;
+    .navbar {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 15px;
+    }
+
+
+    .navbar ul {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 12px;
+    }
+
+
+    .navbar a {
+        font-size: 14px;
+    }
+
+
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+
+    .rendez-vous-popup {
+        top: 100%;
+
+        left: 10px;
+        right: 10px;
+
+        width: auto;
+
+        max-height: 350px;
+    }
 
 }

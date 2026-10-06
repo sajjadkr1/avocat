@@ -1,141 +1,44 @@
-<div class="card">
+@if (avocat) {
+
+    <div class="card">
+
+        <img
+            [src]="avocat.img"
+            [alt]="'Photo de ' + avocat.prenom + ' ' + avocat.nom"
+            class="avocat-image"
+        >
 
 
-    <!-- Image de l'avocat -->
-
-    <img
-
-        [src]="'/' + avocat.img"
-
-        [alt]="avocat.nom"
-
-    >
-
-
-
-
-
-    <!-- Informations principales -->
-
-    <h2>
-        {{ avocat.nom }}
-    </h2>
-
-
-
-
-    <p>
-
-        <strong>Spécialité :</strong>
-
-        {{ avocat.specialite }}
-
-    </p>
-
-
-
-
-    <p>
-
-        <strong>Ville :</strong>
-
-        {{ avocat.ville }}
-
-    </p>
-
-
-
-
-    <p>
-
-        <strong>Langues :</strong>
-
-        {{ avocat.langues.join(', ') }}
-
-    </p>
-
-
-
-
-
-
-    <!-- Bouton -->
-
-    <button 
-        (click)="afficherDetails()">
-
-
-        Voir les informations
-
-
-    </button>
-
-
-
-
-
-
-    <!-- Détails -->
-
-    <div *ngIf="detailsVisible">
-
-
-        <hr>
-
-
-
-        <h3>
-            Informations détaillées
-        </h3>
-
-
+        <h2>
+            {{ avocat.prenom }} {{ avocat.nom }}
+        </h2>
 
 
         <p>
-
-            <strong>Nom complet :</strong>
-
-            {{ avocat.nom }}
-
-        </p>
-
-
-
-
-        <p>
-
             <strong>Spécialité :</strong>
-
-            {{ avocat.specialite }}
-
+            {{ avocat.specialisation }}
         </p>
 
 
-
-
         <p>
-
             <strong>Ville :</strong>
-
             {{ avocat.ville }}
-
         </p>
-
-
 
 
         <p>
-
             <strong>Langues :</strong>
-
-            {{ avocat.langues.join(', ') }}
-
+            {{ avocat.langues?.join(', ') }}
         </p>
 
 
-
+        <button
+            type="button"
+            (click)="voirDetail()"
+        >
+            Voir les informations
+        </button>
 
     </div>
 
-
-</div>
+}

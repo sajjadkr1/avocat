@@ -1,14 +1,31 @@
-<div class="avocats-container">
+<section class="avocat-list">
+
+    <h1>
+        Les avocats disponibles
+    </h1>
 
 
-    <app-avocat-card
+    @if (avocats.length > 0) {
 
-        *ngFor="let avocat of avocats"
+        <div class="cards-container">
 
-        [avocat]="avocat">
+            @for (avocat of avocats; track avocat.id_avocat) {
 
+                <app-avocat-card
+                    [avocat]="avocat">
+                </app-avocat-card>
 
-    </app-avocat-card>
+            }
 
+        </div>
 
-</div>
+    }
+    @else {
+
+        <p class="empty-message">
+            Aucun avocat trouvé.
+        </p>
+
+    }
+
+</section>

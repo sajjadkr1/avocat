@@ -1,334 +1,465 @@
-/* 
-  Styles pour la page d'accueil
-  =============================
+/*
+Styles pour la page d'accueil
+=============================
 */
 
 
 /* ========================= */
-/* Hero Section */
+/* HERO */
 /* ========================= */
 
-
 .hero {
-
     min-height: 500px;
 
     background:
-    linear-gradient(
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.55)
-    ),
-    url('/assets/img/justice.jpg');
-
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.55)
+        ),
+        url('/img/justice.jpg');
 
     background-size: cover;
-
     background-position: center;
 
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
-
     text-align: center;
-
     color: white;
 
     padding: 40px;
 
     position: relative;
-
 }
-
-
 
 
 .hero-content {
-
     max-width: 700px;
-
 }
 
 
-
-
 .hero h1 {
-
     font-size: 42px;
-
     line-height: 1.2;
 
     margin-bottom: 20px;
 
     font-weight: 700;
-
 }
-
-
 
 
 .hero p {
-
     font-size: 19px;
-
     line-height: 1.6;
 
     margin-bottom: 25px;
-
 }
 
 
-
-
-
 /* ========================= */
-/* Hero Button */
+/* BOUTON HERO */
 /* ========================= */
-
 
 .hero-btn {
-
-
     background-color: #b9975b;
-
-
     color: white;
 
-
     border: none;
-
 
     padding: 15px 35px;
 
-
     border-radius: 8px;
-
 
     font-size: 17px;
 
-
     cursor: pointer;
 
-
     transition: 0.3s;
-
-
 }
-
 
 
 .hero-btn:hover {
-
     background-color: #8c6f3f;
 
+    transform: translateY(-2px);
 }
 
 
-
 /* ========================= */
-/* Recherche */
+/* ZONE DE RECHERCHE */
 /* ========================= */
-
 
 .search-container {
-
-
     display: flex;
-
-
     justify-content: center;
 
+    margin-top: -65px;
+    margin-bottom: 70px;
 
-    margin-top: -60px;
-
-
-    margin-bottom: 60px;
-
+    padding: 0 25px;
 
     position: relative;
 
-
     z-index: 10;
-
-
 }
 
 
-
+/* ========================= */
+/* SEARCH BOX */
+/* ========================= */
 
 .search-box {
+    width: 850px;
+    max-width: 100%;
 
+    background-color: #ffffff;
 
-    width: 500px;
+    padding: 35px 40px;
 
+    border-radius: 16px;
 
-    background: white;
-
-
-    padding: 35px;
-
-
-    border-radius: 15px;
-
+    border: 1px solid #e5e5e5;
 
     box-shadow:
-    0 10px 30px rgba(0,0,0,0.18);
+        0 15px 40px rgba(0, 0, 0, 0.16);
+
+    box-sizing: border-box;
+}
 
 
+/* ========================= */
+/* TITRE RECHERCHE */
+/* ========================= */
+
+.search-box h2 {
+    color: #0d2b45;
+
+    text-align: center;
+
+    font-size: 27px;
+
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+
+.search-box h2::after {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 3px;
+
+    background-color: #b9975b;
+
+    margin: 10px auto 0;
+
+    border-radius: 5px;
+}
+
+
+/* ========================= */
+/* CHAMPS CÔTE À CÔTE */
+/* ========================= */
+
+.search-fields {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+
+.search-field {
     display: flex;
-
 
     flex-direction: column;
 
-
-    gap: 15px;
-
-
+    gap: 9px;
 }
 
 
+/* ========================= */
+/* LABELS */
+/* ========================= */
 
+.search-field label {
+    font-size: 15px;
 
-.search-box label {
+    font-weight: 600;
 
-
-    font-size: 18px;
-
-
-    font-weight: bold;
-
-
-    color: #222;
-
-
+    color: #333333;
 }
 
 
+/* ========================= */
+/* INPUT + SELECT */
+/* ========================= */
 
-
-.search-box select {
-
-
+.search-field select,
+.search-field input {
     width: 100%;
 
+    height: 52px;
 
-    padding: 14px;
+    padding: 0 15px;
 
+    border: 1px solid #c8c8c8;
 
     border-radius: 8px;
 
+    background-color: #f8f8f8;
 
-    border: 1px solid #ddd;
-
+    color: #222222;
 
     font-size: 16px;
 
+    box-sizing: border-box;
 
-    cursor: pointer;
-
-
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background-color 0.2s;
 }
 
 
+.search-field select {
+    cursor: pointer;
+}
 
 
-.search-box button {
+.search-field input::placeholder {
+    color: #777777;
+}
 
+
+/* Quand on clique dans un champ */
+
+.search-field select:focus,
+.search-field input:focus {
+    border-color: #b9975b;
+
+    background-color: white;
+
+    box-shadow:
+        0 0 0 3px rgba(185, 151, 91, 0.18);
+
+    outline: none;
+}
+
+
+/* ========================= */
+/* BOUTON RECHERCHE */
+/* ========================= */
+
+.search-btn {
+    display: block;
+
+    min-width: 260px;
+
+    margin: 0 auto;
 
     background-color: #0d2b45;
 
-
     color: white;
-
 
     border: none;
 
-
-    padding: 14px;
-
+    padding: 15px 30px;
 
     border-radius: 8px;
 
-
     font-size: 16px;
 
+    font-weight: 600;
 
     cursor: pointer;
 
-
-    transition: 0.3s;
-
-
+    transition:
+        background-color 0.3s,
+        transform 0.2s;
 }
 
 
+.search-btn:hover {
+    background-color: #b9975b;
 
-
-.search-box button:hover {
-
-
-    background-color: #16476d;
-
-
+    transform: translateY(-2px);
 }
 
 
+/* ========================= */
+/* NAVIGATION CLAVIER */
+/* ========================= */
+
+.hero-btn:focus-visible,
+.search-btn:focus-visible {
+    outline: 3px solid #0d2b45;
+
+    outline-offset: 3px;
+}
+
+
+.hero-btn:focus-visible {
+    outline-color: white;
+}
+
+
+.search-field input:focus-visible,
+.search-field select:focus-visible {
+    outline: 3px solid #b9975b;
+
+    outline-offset: 2px;
+}
+
 
 /* ========================= */
-/* Responsive Mobile */
+/* TABLETTE */
 /* ========================= */
 
-
-@media(max-width:768px){
-
+@media (max-width: 1024px) {
 
     .hero {
+        min-height: 470px;
 
-        min-height: 450px;
-
-        padding:20px;
-
+        padding: 30px;
     }
-
 
 
     .hero h1 {
-
-        font-size:32px;
-
+        font-size: 38px;
     }
-
 
 
     .hero p {
-
-        font-size:16px;
-
+        font-size: 18px;
     }
 
 
-.search-box {
+    .search-box {
+        width: 750px;
 
-    width: 500px;
+        padding: 30px;
+    }
 
-    background: white;
 
-    padding: 35px;
-
-    border-radius: 15px;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-
-    display: flex;
-
-    gap: 15px;
-
-    align-items: center;
+    .search-fields {
+        gap: 20px;
+    }
 
 }
 
+
+/* ========================= */
+/* TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .hero {
+        min-height: 420px;
+
+        padding: 20px;
+    }
+
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+
+    .hero p {
+        font-size: 16px;
+    }
+
+
+    .hero-btn {
+        padding: 13px 25px;
+
+        font-size: 16px;
+    }
+
+
+    .search-container {
+        margin-top: -35px;
+
+        padding: 0 15px;
+    }
+
+
+    .search-box {
+        width: 100%;
+
+        padding: 25px 20px;
+    }
+
+
+    .search-box h2 {
+        font-size: 23px;
+
+        margin-bottom: 25px;
+    }
+
+
+    /* Les champs passent l'un sous l'autre */
+
+    .search-fields {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+
+    .search-btn {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+}
+
+
+/* ========================= */
+/* PETIT TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+    .hero {
+        min-height: 380px;
+    }
+
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+
+    .hero p {
+        font-size: 15px;
+    }
+
+
+    .search-box {
+        padding: 22px 16px;
+    }
+
+
+    .search-box h2 {
+        font-size: 21px;
+    }
+
+
+    .search-field select,
+    .search-field input {
+        height: 50px;
+
+        font-size: 16px;
+    }
 
 }

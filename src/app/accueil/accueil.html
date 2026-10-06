@@ -1,148 +1,120 @@
 <section class="hero">
 
-
     <div class="hero-content">
-
 
         <h1>
             Trouvez un avocat adapté à votre situation
         </h1>
 
-
-
         <p>
-            LegalBridge aide les étrangers en France 
+            LegalBridge aide les étrangers en France
             à trouver un avocat adapté à leurs besoins.
         </p>
 
-
-
-
-        <button 
-            class="hero-btn" 
-            (click)="ouvrirRecherche()">
-
-
+        <button
+            type="button"
+            class="hero-btn"
+            (click)="ouvrirRecherche()"
+        >
             Commencer la recherche
-
-
         </button>
-
-
 
     </div>
 
-
 </section>
-
-
-
 
 
 <!-- Zone de recherche -->
 
 @if (afficherRecherche) {
 
+    <div
+        id="search"
+        class="search-container"
+    >
+
+        <div class="search-box">
+
+            <h2>
+                Trouvez votre avocat
+            </h2>
 
 
-<div 
-    id="search" 
-    class="search-container">
+            <!-- Les deux champs de recherche -->
+
+            <div class="search-fields">
 
 
+                <!-- Problème -->
 
-    <div class="search-box">
+                <div class="search-field">
 
+                    <label for="probleme">
+                        Quel est votre problème ?
+                    </label>
 
+                    <select
+                        id="probleme"
+                        [(ngModel)]="problemeSelectionne"
+                    >
 
-        <h2>
-            Trouvez votre avocat
-        </h2>
+                        <option value="">
+                            Choisir un problème
+                        </option>
 
+                        <option value="immigration">
+                            Droit des étrangers
+                        </option>
 
+                        <option value="demande d'asile">
+                            Demande d'asile
+                        </option>
 
+                        <option value="logement">
+                            Logement
+                        </option>
 
-        <label>
-            Quel est votre problème ?
-        </label>
+                        <option value="travail">
+                            Droit du travail
+                        </option>
 
+                    </select>
 
-
-
-        <select [(ngModel)]="problemeSelectionne">
-
-
-
-            <option value="">
-                Choisir un problème
-            </option>
-
-
-
-            <option value="immigration">
-                Droit des étrangers
-            </option>
-
-
-
-            <option value="demande d'asile">
-                Demande d'asile
-            </option>
+                </div>
 
 
+                <!-- Ville -->
 
-            <option value="logement">
-                Logement
-            </option>
+                <div class="search-field">
 
+                    <label for="ville">
+                        Votre ville
+                    </label>
 
+                    <input
+                        id="ville"
+                        type="text"
+                        placeholder="Ex : Paris"
+                        [(ngModel)]="villeSelectionnee"
+                    >
 
-            <option value="travail">
-                Droit du travail
-            </option>
+                </div>
 
-
-
-        </select>
-
-    
-
-
-        <label>
-            Votre ville
-        </label>
+            </div>
 
 
-<input 
-    type="text"
-    placeholder="Ex: Paris"
-    [(ngModel)]="villeSelectionnee">
+            <!-- Bouton de recherche -->
 
-    
+            <button
+                type="button"
+                class="search-btn"
+                (click)="chercherAvocat()"
+            >
+                Rechercher un avocat
+            </button>
 
-
-
-        <button 
-            class="search-btn"
-            (click)="chercherAvocat()">
-
-
-
-            Rechercher un avocat
-
-
-
-        </button>
-
-
-
+        </div>
 
     </div>
-
-
-
-</div>
-
-
 
 }

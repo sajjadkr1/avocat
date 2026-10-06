@@ -1,0 +1,355 @@
+/* ========================= */
+/* CONTENEUR PRINCIPAL */
+/* ========================= */
+
+.detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 50px 30px;
+}
+
+
+/* ========================= */
+/* CARTE AVOCAT */
+/* ========================= */
+
+.detail-card {
+    width: 800px;
+    max-width: 100%;
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 30px;
+
+    display: flex;
+
+    gap: 30px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    box-sizing: border-box;
+}
+
+
+/* ========================= */
+/* IMAGE */
+/* ========================= */
+
+.detail-image {
+    width: 250px;
+    height: 250px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    flex-shrink: 0;
+}
+
+
+/* ========================= */
+/* INFORMATIONS */
+/* ========================= */
+
+.detail-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.detail-info h1 {
+    font-size: 32px;
+
+    color: #0d2b45;
+
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+.detail-info p {
+    font-size: 17px;
+
+    line-height: 1.5;
+
+    margin: 12px 0;
+
+    color: #444;
+}
+
+
+/* ========================= */
+/* BOUTONS */
+/* ========================= */
+
+.detail-info button {
+    background: #b9975b;
+
+    color: white;
+
+    border: none;
+
+    padding: 14px 25px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition:
+        background-color 0.3s,
+        transform 0.2s;
+}
+
+
+.detail-info button:hover {
+    background: #8c6f3f;
+
+    transform: translateY(-2px);
+}
+
+
+.detail-info button:focus-visible {
+    outline: 3px solid #0d2b45;
+
+    outline-offset: 3px;
+}
+
+
+/* ========================= */
+/* FORMULAIRE RENDEZ-VOUS */
+/* ========================= */
+
+.rendez-vous-form {
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #dddddd;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.rendez-vous-form h2 {
+    color: #0d2b45;
+
+    font-size: 22px;
+
+    margin: 0 0 10px;
+}
+
+
+.rendez-vous-form label {
+    color: #333;
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+
+.rendez-vous-form input,
+.rendez-vous-form textarea {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #767676;
+
+    border-radius: 8px;
+
+    background: #f8f8f8;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+}
+
+
+.rendez-vous-form textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+.rendez-vous-form input:focus,
+.rendez-vous-form textarea:focus {
+    border-color: #b9975b;
+
+    background: white;
+
+    outline: none;
+
+    box-shadow: 0 0 0 3px rgba(185, 151, 91, 0.18);
+}
+
+
+.rendez-vous-form input:focus-visible,
+.rendez-vous-form textarea:focus-visible {
+    outline: 3px solid #b9975b;
+
+    outline-offset: 2px;
+}
+
+
+/* ========================= */
+/* MESSAGE DE SUCCÈS */
+/* ========================= */
+
+.success-message {
+    margin-top: 20px;
+
+    padding: 14px;
+
+    background: #eef7ee;
+
+    border-left: 4px solid #3d7a45;
+
+    border-radius: 6px;
+
+    color: #24552b;
+
+    font-weight: 600;
+}
+
+
+/* ========================= */
+/* CHARGEMENT */
+/* ========================= */
+
+.loading-message {
+    text-align: center;
+
+    padding: 50px;
+
+    color: #555;
+
+    font-size: 18px;
+}
+
+
+/* ========================= */
+/* TABLETTE */
+/* ========================= */
+
+@media (max-width: 1024px) {
+
+    .detail-container {
+        padding: 40px 20px;
+    }
+
+
+    .detail-card {
+        width: 700px;
+
+        gap: 25px;
+    }
+
+
+    .detail-image {
+        width: 220px;
+        height: 220px;
+    }
+
+
+    .detail-info h1 {
+        font-size: 28px;
+    }
+
+}
+
+
+/* ========================= */
+/* TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .detail-container {
+        padding: 25px 15px;
+    }
+
+
+    .detail-card {
+        flex-direction: column;
+
+        width: 100%;
+
+        padding: 20px;
+    }
+
+
+    .detail-image {
+        width: 100%;
+        height: 300px;
+    }
+
+
+    .detail-info h1 {
+        font-size: 26px;
+
+        text-align: center;
+    }
+
+
+    .detail-info p {
+        font-size: 16px;
+    }
+
+
+    .detail-info > button {
+        width: 100%;
+
+        min-height: 44px;
+
+        margin-top: 10px;
+    }
+
+
+    .rendez-vous-form button {
+        width: 100%;
+
+        min-height: 44px;
+    }
+
+}
+
+
+/* ========================= */
+/* PETIT TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+    .detail-card {
+        padding: 15px;
+    }
+
+
+    .detail-image {
+        height: 240px;
+    }
+
+
+    .detail-info h1 {
+        font-size: 23px;
+    }
+
+
+    .rendez-vous-form h2 {
+        font-size: 20px;
+    }
+
+}

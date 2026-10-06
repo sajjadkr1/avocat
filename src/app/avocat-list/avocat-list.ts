@@ -25,28 +25,21 @@ import { AvocatService } from '../services/avocat.service';
 })
 
 
-
 export class AvocatList implements OnInit {
 
 
 
-  // Tableau qui contient la liste des avocats à afficher
+  // Tableau qui contient les avocats à afficher
   avocats: Avocat[] = [];
 
-
-
-  // Variable qui contient l'avocat sélectionné
-  selectedAvocat!: Avocat;
 
 
 
 
   constructor(
 
-
-    // Injection du service qui contient les données des avocats
+    // Service qui contient les données des avocats
     private avocatService: AvocatService
-
 
   ) {}
 
@@ -55,57 +48,85 @@ export class AvocatList implements OnInit {
 
 
 
-  // Méthode exécutée automatiquement au chargement du composant
+  // Cette méthode s'exécute automatiquement au chargement de la page
 
   ngOnInit(): void {
 
 
 
-    // Récupérer les résultats de recherche depuis le service
+    // Récupérer les résultats de recherche sauvegardés dans le service
 
-    const resultats = this.avocatService.getAvocatsRecherche();
-
-
+    const resultatsRecherche = this.avocatService.getAvocatsRecherche();
 
 
 
-    if(resultats.length > 0) {
+
+    console.log(
+      "Résultats sauvegardés :",
+      resultatsRecherche
+    );
 
 
 
-      this.avocats = resultats;
+
+
+    // Si l'utilisateur a effectué une recherche
+
+    if (resultatsRecherche.length > 0) {
+
+
+
+      this.avocats = resultatsRecherche;
 
 
 
       console.log(
-        "RESULTATS RECHERCHE:",
+        "Avocats affichés après recherche :",
         this.avocats
       );
 
 
 
-    } else {
+    } 
 
 
 
-      // Récupérer tous les avocats depuis json-server
+    // Sinon charger tous les avocats
+
+    else {
+
 
 
       this.avocatService.getAvocats()
 
-      .subscribe((data: Avocat[]) => {
+      .subscribe({
+
+        next: (data: Avocat[]) => {
+
+
+          this.avocats = data;
 
 
 
-        this.avocats = data;
+          console.log(
+            "Tous les avocats :",
+            this.avocats
+          );
 
 
+        },
 
-        console.log(
-          "DATA:",
-          this.avocats
-        );
 
+        error: (err) => {
+
+
+          console.error(
+            "Erreur récupération des avocats :",
+            err
+          );
+
+
+        }
 
 
       });
@@ -113,40 +134,6 @@ export class AvocatList implements OnInit {
 
 
     }
-
-
-
-
-
-
-    console.log(
-
-      "Nombre des avocats:",
-
-      this.avocats.length
-
-    );
-
-
-
-  }
-
-
-
-
-
-
-
-
-  // Méthode appelée quand l'utilisateur clique sur un avocat
-
-  showDetails(avocat: Avocat): void {
-
-
-
-    // Stocker l'avocat choisi pour afficher ses détails
-
-    this.selectedAvocat = avocat;
 
 
 

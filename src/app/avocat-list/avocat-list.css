@@ -1,21 +1,152 @@
+/* ========================= */
+/* Liste des avocats */
+/* ========================= */
+
+.avocat-list {
+    padding: 50px 30px;
+}
+
+
+/* Titre principal */
+
+.avocat-list h1 {
+    text-align: center;
+
+    color: #0d2b45;
+
+    font-size: 32px;
+
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+
+
+/* Petite ligne décorative */
+
+.avocat-list h1::after {
+    content: "";
+
+    display: block;
+
+    width: 60px;
+    height: 3px;
+
+    background-color: #b9975b;
+
+    margin: 12px auto 0;
+
+    border-radius: 5px;
+}
+
+
+/* ========================= */
 /* Conteneur des cartes */
+/* ========================= */
 
-.avocats-container {
+.cards-container {
+    display: grid;
 
-
-    display: flex;
-
-
-    flex-wrap: wrap;
-
+    grid-template-columns: repeat(3, 300px);
 
     justify-content: center;
 
-
     gap: 30px;
 
+    width: 100%;
 
-    padding: 40px;
+    max-width: 1100px;
 
+    margin: 0 auto;
+}
+
+
+/* ========================= */
+/* Message aucun résultat */
+/* ========================= */
+
+.empty-message {
+    text-align: center;
+
+    color: #555555;
+
+    font-size: 18px;
+
+    margin: 50px 0;
+}
+
+
+/* ========================= */
+/* Tablette */
+/* ========================= */
+
+@media (max-width: 1024px) {
+
+    .avocat-list {
+        padding: 40px 20px;
+    }
+
+
+    .cards-container {
+        grid-template-columns: repeat(2, 280px);
+
+        gap: 25px;
+    }
+
+
+    .avocat-list h1 {
+        font-size: 28px;
+    }
+
+}
+
+
+/* ========================= */
+/* Téléphone */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .avocat-list {
+        padding: 35px 15px;
+    }
+
+
+    .cards-container {
+        grid-template-columns: 1fr;
+
+        max-width: 400px;
+
+        gap: 25px;
+    }
+
+
+    .avocat-list h1 {
+        font-size: 25px;
+
+        margin-bottom: 30px;
+    }
+
+}
+
+
+/* ========================= */
+/* Petit téléphone */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+    .avocat-list {
+        padding: 30px 15px;
+    }
+
+
+    .avocat-list h1 {
+        font-size: 23px;
+    }
+
+
+    .empty-message {
+        font-size: 16px;
+    }
 
 }

@@ -1,15 +1,29 @@
 export interface Avocat {
+telephone: any;
+specialite: any;
 
-  id: number;
+    id_avocat: number;
 
-  nom: string;
+    nom: string;
 
-  specialite: string;
+    prenom: string;
 
-  ville: string;
+    email: string;
 
-  img: string;
+    ville: string;
 
-  langues: string[];
+    portable: string;
+
+    adresse: string;
+
+    img: string;
+
+    description: string;
+
+    traducteur_disponible: boolean;
+
+    specialisation?: string;
+
+    langues?: string[];
 
 }

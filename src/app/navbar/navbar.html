@@ -1,32 +1,178 @@
-<nav class="navbar">
+<nav class="navbar" aria-label="Navigation principale">
 
-  <a class="logo">
-    <img src="assets/img/logo.png" alt="LegalBridge">
-  </a>
+    <!-- Logo -->
+    <a
+        class="logo"
+        routerLink="/"
+        aria-label="Retour à l'accueil"
+    >
+        <img
+            src="img/logo.png"
+            alt="LegalBridge"
+        >
+    </a>
 
-  <ul>
-    <li>
-      <a routerLink="/avocats">
-        Trouvez un avocat
-      </a>
-    </li>
 
-    <li>
-      <a routerLink="/contact">
-        Contact
-      </a>
-    </li>
-    <li>
-      <a routerLink="/about">
-        À propos
-      </a>
-    </li>
+    <ul>
 
-    <li>
-      <a routerLink="/accueil">
-        Accueil
-      </a>
-    </li>
-  </ul>
+        @if (isLoginPage) {
+
+            <li>
+                <a routerLink="/">
+                    Accueil
+                </a>
+            </li>
+
+            <li>
+                <a routerLink="/about">
+                    À propos
+                </a>
+            </li>
+
+        } @else {
+
+            @if (isLoggedIn) {
+
+                <li>
+                    <a
+                        #mesRendezVousButton
+                        (click)="ouvrirMesRendezVous()"
+                        (keydown.enter)="ouvrirMesRendezVous()"
+                        (keydown.space)="ouvrirMesRendezVous(); $event.preventDefault()"
+                        tabindex="0"
+                        role="button"
+                        [attr.aria-expanded]="afficherMesRendezVous"
+                    >
+                        Mes rendez-vous
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        (click)="seDeconnecter()"
+                        (keydown.enter)="seDeconnecter()"
+                        (keydown.space)="seDeconnecter(); $event.preventDefault()"
+                        aria-label="Se déconnecter"
+                        tabindex="0"
+                        role="button"
+                    >
+                        <i
+                            class="fa-solid fa-right-to-bracket"
+                            aria-hidden="true"
+                        ></i>
+                    </a>
+                </li>
+
+            } @else {
+
+                <li>
+                    <a
+                        routerLink="/login"
+                        aria-label="Se connecter"
+                    >
+                        <i
+                            class="fa-solid fa-user"
+                            aria-hidden="true"
+                        ></i>
+                    </a>
+                </li>
+
+            }
+
+
+            <li>
+                <a routerLink="/">
+                    Accueil
+                </a>
+            </li>
+
+
+            <li>
+                <a routerLink="/avocats">
+                    Trouvez un avocat
+                </a>
+            </li>
+
+
+            <li>
+                <a routerLink="/contact">
+                    Contact
+                </a>
+            </li>
+
+
+            <li>
+                <a routerLink="/about">
+                    À propos
+                </a>
+            </li>
+
+        }
+
+    </ul>
+
+
+    <!-- Fenêtre des rendez-vous -->
+    @if (afficherMesRendezVous) {
+
+        <div
+            #rendezVousPopup
+            class="rendez-vous-popup"
+        >
+
+            <h2>Mes rendez-vous</h2>
+
+
+            @if (mesRendezVous.length > 0) {
+
+                @for (
+                    rendezVous of mesRendezVous;
+                    track $any(rendezVous).id_rendez_vous
+                ) {
+
+                    <div class="rendez-vous-item">
+
+                        <p>
+                            <strong>Avocat :</strong>
+                            {{ $any(rendezVous).prenom }}
+                            {{ $any(rendezVous).nom }}
+                        </p>
+
+                        <p>
+                            <strong>Date :</strong>
+                            {{ $any(rendezVous).date_rendez_vous }}
+                        </p>
+
+                        <p>
+                            <strong>Heure :</strong>
+                            {{ $any(rendezVous).heure_rendez_vous }}
+                        </p>
+
+                        <p>
+                            <strong>Motif :</strong>
+                            {{ $any(rendezVous).motif }}
+                        </p>
+
+                        <p>
+                            <strong>Statut :</strong>
+                            {{ $any(rendezVous).statut }}
+                        </p>
+
+                    </div>
+
+                }
+
+            } @else {
+
+                <p>
+                    Aucun rendez-vous pour le moment.
+                </p>
+
+            }
+
+        </div>
+
+    }
 
 </nav>

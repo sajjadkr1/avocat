@@ -1,17 +1,162 @@
-footer {
+/* ========================= */
+/* FOOTER */
+/* ========================= */
 
+.footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    gap: 30px;
 
     background-color: #413c3c;
     color: white;
 
     padding: 30px;
+
     margin-top: 40px;
+}
+
+
+/* ========================= */
+/* COPYRIGHT */
+/* ========================= */
+
+.footer-copyright {
+    margin: 0;
+
+    font-size: 15px;
+}
+
+
+/* ========================= */
+/* LIENS UTILES */
+/* ========================= */
+
+.footer-links {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.footer-title {
+    margin: 0;
+
+    font-weight: 600;
+
+    font-size: 16px;
+}
+
+
+.footer-links ul {
+    display: flex;
+
+    gap: 20px;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+.footer-links a {
+    color: white;
+
+    text-decoration: none;
+}
+
+
+.footer-links a:hover {
+    color: #d4af37;
+
+    text-decoration: underline;
+}
+
+
+/* ========================= */
+/* NAVIGATION CLAVIER */
+/* ========================= */
+
+.footer-links a:focus-visible {
+    outline: 3px solid white;
+
+    outline-offset: 4px;
+
+    border-radius: 4px;
+}
+
+
+/* ========================= */
+/* TABLETTE */
+/* ========================= */
+
+@media (max-width: 1024px) {
+
+    .footer {
+        padding: 25px;
+    }
+
+
+    .footer-links {
+        gap: 15px;
+    }
 
 }
 
-a:hover {
-    text-decoration: underline;
+
+/* ========================= */
+/* TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .footer {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 25px 15px;
+
+        gap: 20px;
+    }
+
+
+    .footer-links {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .footer-links ul {
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+}
+
+
+/* ========================= */
+/* PETIT TÉLÉPHONE */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+    .footer-copyright {
+        font-size: 14px;
+    }
+
+
+    .footer-links ul {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
 }

@@ -1,0 +1,108 @@
+<div class="login-container">
+
+    <div class="login-card">
+
+        <h1>
+            Connexion
+        </h1>
+
+        <p class="subtitle">
+            Connectez-vous à votre compte
+        </p>
+
+
+        <!-- Email -->
+
+        <div class="input-group">
+
+            <label for="email">
+                Adresse email
+            </label>
+
+            <input
+                id="email"
+                [(ngModel)]="email"
+                type="email"
+                placeholder="Ex : nom@email.com"
+                autocomplete="email"
+                [class.error]="emailError"
+                [attr.aria-invalid]="emailError"
+                [attr.aria-describedby]="emailError ? 'email-error' : null"
+            >
+
+            @if (emailError) {
+
+                <span
+                    id="email-error"
+                    class="error-message"
+                    role="alert"
+                >
+                    Email invalide
+                </span>
+
+            }
+
+        </div>
+
+
+        <!-- Mot de passe -->
+
+        <div class="input-group">
+
+            <label for="password">
+                Mot de passe
+            </label>
+
+            <input
+                id="password"
+                [(ngModel)]="password"
+                type="password"
+                placeholder="Votre mot de passe"
+                autocomplete="current-password"
+                [class.error]="passwordError"
+                [attr.aria-invalid]="passwordError"
+                [attr.aria-describedby]="passwordError ? 'password-error' : null"
+            >
+
+            @if (passwordError) {
+
+                <span
+                    id="password-error"
+                    class="error-message"
+                    role="alert"
+                >
+                    Mot de passe invalide
+                    (8 caractères min, majuscule + chiffre)
+                </span>
+
+            }
+
+        </div>
+
+
+        <!-- Bouton de connexion -->
+
+        <button
+            type="button"
+            (click)="seConnecter()"
+        >
+            Se connecter
+        </button>
+
+
+        <!-- Message d'erreur envoyé par le serveur -->
+
+        @if (loginError) {
+
+            <p
+                class="login-error"
+                role="alert"
+            >
+                {{ loginError }}
+            </p>
+
+        }
+
+    </div>
+
+</div>

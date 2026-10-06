@@ -42,3 +42,17 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+# Fichiers générés
+node_modules/
+.angular/
+dist/
+coverage/
+
+# Configuration locale
+.env
+.env.*
+!.env.example
+
+# Archive et métadonnées Windows
+/avocat-interface.zip
+*:Zone.Identifier

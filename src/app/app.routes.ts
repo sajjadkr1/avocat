@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
-
+import { Admin } from './admin/admin';
 import { Login } from './login/login';
 import { Accueil } from './accueil/accueil';
 import { AvocatList } from './avocat-list/avocat-list';
 import { AvocatDetail } from './avocat-detail/avocat-detail';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
+import { adminGuard } from './guards/admin.guard';
 
 
 export const routes: Routes = [
@@ -49,6 +50,13 @@ export const routes: Routes = [
     {
         path: 'about',
         component: About
+    },
+
+    // Admin page
+    {
+        path: 'admin',
+        component: Admin,
+        canActivate: [adminGuard]
     }
 
 ];

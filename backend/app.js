@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const rendezVousRoutes = require('./routes/rendez-vous.routes');
 const avocatRoutes = require('./routes/avocat.routes');
-
+const adminRoutes = require('./routes/admin.routes');
 const utilisateurRoutes = require('./routes/utilisateur.routes')
 
 const app = express();
@@ -20,8 +20,8 @@ app.use(cors({
 
 // Routes des avocats
 app.use('/api/avocats', avocatRoutes);
-
 app.use('/api/utilisateurs', utilisateurRoutes);
 app.use('/api/rendez-vous', rendezVousRoutes);
+app.use('/api/admin', adminRoutes);
 
 module.exports = app;

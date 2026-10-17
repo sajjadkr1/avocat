@@ -34,9 +34,21 @@ try {
     return res.status(401).json({
         error: 'Token invalide ou expiré'
     });
-}
-
 };
+};
+
+const verifierAdmin = (req, res, next) => {
+
+    if (req.utilisateur.role !== 'admin') {
+        return res.status(403).json({
+            error: 'Accès interdit'
+        });
+    }
+
+    next();
+};
+
 module.exports = {
-    verifierToken
+    verifierToken,
+    verifierAdmin
 };

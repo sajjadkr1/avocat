@@ -173,18 +173,13 @@ export class Accueil {
 
         // Aller vers la page des avocats
 
-        this.router.navigate(['/avocats']);
-
-
-
+        this.router.navigate(['/avocats'], {
+  queryParams: {
+    ville: this.villeSelectionnee,
+    specialisation: this.problemeSelectionne
+  }
+});
 
       });
-
-
-
+    }
   }
-
-
-
-
-}

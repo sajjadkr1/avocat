@@ -1,1 +1,128 @@
-<p>admin works!</p>
+<ag-grid-angular
+  style="width: 100%; height: 500px;"
+  [rowData]="avocats"
+  [columnDefs]="columnDefs"
+  [pagination]="true"
+  [paginationPageSize]="10">
+</ag-grid-angular>
+
+
+<button (click)="ouvrirFormulaireAjout()">
+  Ajouter un avocat
+</button>
+
+
+@if (afficherFormulaireAjout) {
+
+  <div
+  #formAjout
+  class="form-ajout"
+>
+
+    <h2>Ajouter un avocat</h2>
+
+    <label>Nom</label>
+
+    <input
+      type="text"
+      [(ngModel)]="nouvelAvocat.nom"
+    >
+
+
+    <label>Prénom</label>
+
+    <input
+      type="text"
+      [(ngModel)]="nouvelAvocat.prenom"
+    >
+
+
+    <label>Email</label>
+
+    <input
+      type="email"
+      [(ngModel)]="nouvelAvocat.email"
+    >
+
+
+    <label>Ville</label>
+
+    <input
+      type="text"
+      [(ngModel)]="nouvelAvocat.ville"
+    >
+
+
+    <label>Portable</label>
+
+    <input
+      type="text"
+      [(ngModel)]="nouvelAvocat.portable"
+    >
+
+
+    <button (click)="ajouterAvocat()">
+      Enregistrer
+    </button>
+
+  </div>
+
+}
+
+
+@if (afficherFormulaireModification) {
+
+ <div
+  #formModification
+  class="form-modification"
+>
+
+    <h2>Modifier l'avocat</h2>
+
+    <label>Nom</label>
+
+    <input
+      type="text"
+      [(ngModel)]="avocatSelectionne.nom"
+    >
+
+
+    <label>Prénom</label>
+
+    <input
+      type="text"
+      [(ngModel)]="avocatSelectionne.prenom"
+    >
+
+
+    <label>Email</label>
+
+    <input
+      type="email"
+      [(ngModel)]="avocatSelectionne.email"
+    >
+
+
+    <label>Ville</label>
+
+    <input
+      type="text"
+      [(ngModel)]="avocatSelectionne.ville"
+    >
+
+
+    <label>Portable</label>
+
+    <input
+      type="text"
+      [(ngModel)]="avocatSelectionne.portable"
+    >
+
+
+    <button (click)="enregistrerModification()">
+      Enregistrer
+    </button>
+
+  </div>
+
+}

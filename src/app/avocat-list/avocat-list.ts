@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
 import { AvocatCard } from '../avocat-card/avocat-card';
 import { Avocat } from '../models/avocat';
 import { AvocatService } from '../services/avocat.service';
@@ -39,9 +39,11 @@ export class AvocatList implements OnInit {
   constructor(
 
     // Service qui contient les données des avocats
-    private avocatService: AvocatService
+    private avocatService: AvocatService,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
 
-  ) {}
+  ) { }
 
 
 
@@ -51,102 +53,31 @@ export class AvocatList implements OnInit {
   // Cette méthode s'exécute automatiquement au chargement de la page
 
   ngOnInit(): void {
+    // Lire les critères conservés dans le lien
+    const ville = this.route.snapshot.queryParamMap.get('ville');
+    const specialisation =
+      this.route.snapshot.queryParamMap.get('specialisation');
 
-
-
-    // Récupérer les résultats de recherche sauvegardés dans le service
-
-    const resultatsRecherche = this.avocatService.getAvocatsRecherche();
-
-
-
-
-    console.log(
-      "Résultats sauvegardés :",
-      resultatsRecherche
-    );
-
-
-
-
-
-    // Si l'utilisateur a effectué une recherche
-
-    if (resultatsRecherche.length > 0) {
-
-
-
-      this.avocats = resultatsRecherche;
-
-
-
-      console.log(
-        "Avocats affichés après recherche :",
-        this.avocats
-      );
-
-
-
-    } 
-
-
-
-    // Sinon charger tous les avocats
-
-    else {
-
-
-
-      const avocats$ = this.avocatService.getAvocats() as any;
-
-      if (avocats$ && typeof avocats$.subscribe === 'function') {
-
-        avocats$.subscribe({
-
+    if (ville && specialisation) {
+      // Relancer la même recherche, même après F5
+      this.avocatService
+        .chercherAvocats(specialisation, ville)
+        .subscribe({
           next: (data: Avocat[]) => {
-
-
             this.avocats = data;
-
-
-
-            console.log(
-              "Tous les avocats :",
-              this.avocats
-            );
-
-
+            this.avocatService.setAvocatsRecherche(data);
+            this.cdr.markForCheck();
           },
-
-
           error: (err: unknown) => {
-
-
             console.error(
-              "Erreur récupération des avocats :",
+              'Erreur récupération des avocats :',
               err
             );
-
-
           }
-
-
         });
-
-      } else {
-
-        console.warn('Le service ne retourne pas un Observable pour getAvocats().');
-
-      }
-
-
-
+    } else {
+      // Ancien lien sans critères : utiliser les résultats en mémoire
+      this.avocats = this.avocatService.getAvocatsRecherche();
     }
-
-
-
   }
-
-
-
 }

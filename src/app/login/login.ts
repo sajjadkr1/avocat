@@ -50,9 +50,15 @@ export class Login {
 
             // Enregistre le token après connexion
             localStorage.setItem('token', response.token);
+            // Redirige selon le role de l'utilisateur
+            if (response.utilisateur.role === 'admin') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/']);
+            }
 
             // Retourne à la page d'accueil
-            this.router.navigate(['/']);
+            //this.router.navigate(['/']);
 
           },
 

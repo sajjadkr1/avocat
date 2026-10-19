@@ -9,7 +9,9 @@ const {
     getAllAvocats,
     deleteAvocat,
     updateAvocat,
-    addAvocat
+    addAvocat,
+    getAllRendezVous,
+    updateStatutRendezVous
 } = require('../controllers/admin.controller');
 
 const router = express.Router();
@@ -56,6 +58,18 @@ router.post(
     verifierToken,
     verifierAdmin,
     addAvocat
+);
+router.get(
+    '/rendez-vous',
+    verifierToken,
+    verifierAdmin,
+    getAllRendezVous
+);
+router.put(
+    '/rendez-vous/:id/statut',
+    verifierToken,
+    verifierAdmin,
+    updateStatutRendezVous
 );
 
 

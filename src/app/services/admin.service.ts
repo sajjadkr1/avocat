@@ -60,6 +60,17 @@ addAvocat(avocat: any) {
          }
     );
 
+}
+getAllRendezVous() {
+    const token = localStorage.getItem('token');
 
+    return this.http.get(
+        'http://localhost:5000/api/admin/rendez-vous',
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
 }
 }

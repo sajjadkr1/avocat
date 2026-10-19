@@ -17,6 +17,7 @@ import {
 } from 'ag-grid-community';
 
 
+
 ModuleRegistry.registerModules([
   AllCommunityModule
 ]);
@@ -36,6 +37,7 @@ ModuleRegistry.registerModules([
 export class Admin implements OnInit {
 
   avocats: any[] = [];
+  rendezVous: any[] = [];
 
   afficherFormulaireAjout = false;
 
@@ -200,6 +202,15 @@ export class Admin implements OnInit {
 
         }
 
+      });
+      this.adminService
+      .getAllRendezVous()
+      .subscribe({
+        next: (response: any) => {
+          this.rendezVous = response;
+          console.log(this.rendezVous);
+          this.cdr.detectChanges();
+        }
       });
 
   }
@@ -375,5 +386,58 @@ export class Admin implements OnInit {
       });
 
   }
+  columnDefsRendezVous = [
+    {
+      field: 'nom_utilisateur',
+      headerName: 'Nom utilisateur',
+      sortable: true,
+      filter: true
+    },
+    {
+      field: 'prenom_utilisateur',
+      headerName: 'prenom utilisateur',
+      sortable: true,
+      filter: true,
+    },
+    {
+      field:'nom_avocat',
+      headerName: 'Nom avocat',
+      sortable: true,
+      filter: true
+    },
+
+    {
+      field: 'prenom_avocat',
+    headerName: 'Prénom avocat',
+    sortable: true,
+    filter: true
+    },
+    {
+    field: 'date_rendez_vous',
+    headerName: 'Date',
+    sortable: true,
+    filter: true
+  },
+   {
+    field: 'heure_rendez_vous',
+    headerName: 'Heure',
+    sortable: true,
+    filter: true
+  },
+  {
+    field: 'statut',
+    headerName: 'Statut',
+    sortable: true,
+    filter: true
+  },
+
+  {
+    field: 'motif',
+    headerName: 'Motif',
+    sortable: true,
+    filter: true
+  }
+
+  ];
 
 }

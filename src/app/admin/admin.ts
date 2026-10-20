@@ -436,8 +436,107 @@ export class Admin implements OnInit {
     headerName: 'Motif',
     sortable: true,
     filter: true
+  },
+  {
+  headerName: 'Actions',
+
+  cellRenderer: (params: any) => {
+
+    const container =
+      document.createElement('div');
+
+    const btnConfirmer =
+      document.createElement('button');
+
+    btnConfirmer.textContent =
+      'Confirmer';
+
+    const btnAnnuler =
+      document.createElement('button');
+
+    btnAnnuler.textContent =
+      'Annuler';
+
+
+    btnConfirmer.addEventListener(
+      'click',
+      () => {
+
+        this.ngZone.run(() => {
+
+          this.changerStatutRendezVous(
+            params.data.id_rendez_vous,
+            'confirme'
+          );
+
+        });
+
+      }
+    );
+
+
+    btnAnnuler.addEventListener(
+      'click',
+      () => {
+
+        this.ngZone.run(() => {
+
+          this.changerStatutRendezVous(
+            params.data.id_rendez_vous,
+            'annule'
+          );
+
+        });
+
+      }
+    );
+
+
+    container.appendChild(
+      btnConfirmer
+    );
+
+    container.appendChild(
+      btnAnnuler
+    );
+
+
+    return container;
+
   }
 
-  ];
-
 }
+
+  ];
+changerStatutRendezVous(id: number, statut: string) {
+
+  this.adminService
+    .updateStatutRendezVous(id, statut)
+
+    .subscribe({
+
+      next: () => {
+
+        const index =
+          this.rendezVous.findIndex(
+            rendezVous =>
+              rendezVous.id_rendez_vous === id
+          );
+
+        if (index !== -1) {
+
+          this.rendezVous[index].statut = statut;
+
+          this.rendezVous = [
+            ...this.rendezVous
+          ];
+
+        }
+
+        this.cdr.detectChanges();
+
+      }
+
+    });
+
+}}

@@ -73,4 +73,18 @@ getAllRendezVous() {
         }
     );
 }
+updateStatutRendezVous(id: number, statut: string) {
+    const token = localStorage.getItem('token');
+    return this.http.put(
+        `http://localhost:5000/api/admin/rendez-vous/${id}/statut`,
+        {
+            statut: statut
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+}
 }

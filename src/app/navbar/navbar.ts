@@ -9,7 +9,8 @@ import {
 import {
     Router,
     RouterLink,
-    NavigationEnd
+    NavigationEnd,
+    RouterLinkActive
 } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
@@ -17,11 +18,13 @@ import { filter } from 'rxjs/operators';
 import { RendezVous } from '../services/rendez-vous';
 
 
+
 @Component({
     selector: 'app-navbar',
     standalone: true,
     imports: [
-        RouterLink
+        RouterLink,
+        RouterLinkActive
     ],
     templateUrl: './navbar.html',
     styleUrl: './navbar.css',
@@ -36,6 +39,10 @@ export class Navbar {
 
     // Indique si l'utilisateur est connecté
     isLoggedIn = false;
+
+
+    // Indique si l'utilisateur connecté est un administrateur
+    isAdmin = false;
 
 
     // Stocke les rendez-vous récupérés depuis le backend
@@ -184,12 +191,42 @@ export class Navbar {
 
 
     // Vérifie si l'utilisateur est connecté
+    // et vérifie également son rôle
     private checkLogin() {
+
+        // Récupère le token depuis le localStorage
+        const token =
+            localStorage.getItem('token');
+
 
         // Un utilisateur est considéré comme connecté
         // si un token existe dans le localStorage
         this.isLoggedIn =
-            !!localStorage.getItem('token');
+            !!token;
+
+
+        // Vérifie si le token existe
+        if (token) {
+
+            // Récupère les informations contenues
+            // dans la deuxième partie du token JWT
+            const payload = JSON.parse(
+                atob(token.split('.')[1])
+            );
+
+
+            // Vérifie si le rôle de l'utilisateur
+            // est "admin"
+            this.isAdmin =
+                payload.role === 'admin';
+
+        } else {
+
+            // Si aucun token n'existe,
+            // l'utilisateur n'est pas administrateur
+            this.isAdmin = false;
+
+        }
 
     }
 

@@ -157,6 +157,16 @@ if (err) {
     const updateStatutRendezVous = (req, res) => {
         const id = req.params.id;
         const statut = req.body.statut;
+        const statusAutorises = [
+            'en_attente',
+            'confirme',
+            'annule'
+        ];
+        if (!statusAutorises.includes(statut)) {
+            return res.status(400).json({
+                error: 'Statut invalide'
+            });
+        }
         dt.query(
             `
             UPDATE rendez_vous

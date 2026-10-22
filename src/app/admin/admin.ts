@@ -10,6 +10,7 @@ import {
 import { AdminService } from '../services/admin.service';
 import { FormsModule } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
+import { RendezVousActionsRenderer } from './rendez-vous-actions-renderer';
 
 import {
   AllCommunityModule,
@@ -37,9 +38,18 @@ ModuleRegistry.registerModules([
 export class Admin implements OnInit {
 
   avocats: any[] = [];
+
   rendezVous: any[] = [];
 
+
   afficherFormulaireAjout = false;
+
+
+  // Permet au renderer des rendez-vous
+  // d'accéder aux méthodes du composant Admin
+  context = {
+    componentParent: this
+  };
 
 
   columnDefs = [
@@ -86,10 +96,13 @@ export class Admin implements OnInit {
 
         const container =
           document.createElement('div');
-
+         
+          container.className = 'actions-avocat';
 
         const btnModifier =
           document.createElement('button');
+
+          btnModifier.className = 'btn-modifier';
 
         btnModifier.textContent =
           'Modifier';
@@ -100,6 +113,8 @@ export class Admin implements OnInit {
 
         btnSupprimer.textContent =
           'Supprimer';
+
+          btnSupprimer.className =  'btn-supprimer';
 
 
         btnModifier.addEventListener(
@@ -169,6 +184,7 @@ export class Admin implements OnInit {
 
   avocatSelectionne: any = null;
 
+
   afficherFormulaireModification = false;
 
 
@@ -203,14 +219,23 @@ export class Admin implements OnInit {
         }
 
       });
-      this.adminService
+
+
+    this.adminService
       .getAllRendezVous()
+
       .subscribe({
+
         next: (response: any) => {
+
           this.rendezVous = response;
-          console.log(this.rendezVous);
+
+          
+
           this.cdr.detectChanges();
+
         }
+
       });
 
   }
@@ -386,21 +411,26 @@ export class Admin implements OnInit {
       });
 
   }
+
+
   columnDefsRendezVous = [
+
     {
       field: 'nom_utilisateur',
       headerName: 'Nom utilisateur',
       sortable: true,
       filter: true
     },
+
     {
       field: 'prenom_utilisateur',
-      headerName: 'prenom utilisateur',
+      headerName: 'Prénom utilisateur',
       sortable: true,
-      filter: true,
+      filter: true
     },
+
     {
-      field:'nom_avocat',
+      field: 'nom_avocat',
       headerName: 'Nom avocat',
       sortable: true,
       filter: true
@@ -408,135 +438,167 @@ export class Admin implements OnInit {
 
     {
       field: 'prenom_avocat',
-    headerName: 'Prénom avocat',
-    sortable: true,
-    filter: true
+      headerName: 'Prénom avocat',
+      sortable: true,
+      filter: true
     },
+
     {
-    field: 'date_rendez_vous',
-    headerName: 'Date',
-    sortable: true,
-    filter: true
-  },
-   {
-    field: 'heure_rendez_vous',
-    headerName: 'Heure',
-    sortable: true,
-    filter: true
-  },
-  {
-    field: 'statut',
-    headerName: 'Statut',
-    sortable: true,
-    filter: true
-  },
+      field: 'date_rendez_vous',
+      headerName: 'Date',
+      sortable: true,
+      filter: true,
 
-  {
-    field: 'motif',
-    headerName: 'Motif',
-    sortable: true,
-    filter: true
-  },
-  {
-  headerName: 'Actions',
+      // Affiche la date
+      // au format français
+      valueFormatter: (params: any) => {
 
-  cellRenderer: (params: any) => {
+        if (!params.value) {
+          return '';
+        }
 
-    const container =
-      document.createElement('div');
+        const date =
+          new Date(params.value);
 
-    const btnConfirmer =
-      document.createElement('button');
-
-    btnConfirmer.textContent =
-      'Confirmer';
-
-    const btnAnnuler =
-      document.createElement('button');
-
-    btnAnnuler.textContent =
-      'Annuler';
-
-
-    btnConfirmer.addEventListener(
-      'click',
-      () => {
-
-        this.ngZone.run(() => {
-
-          this.changerStatutRendezVous(
-            params.data.id_rendez_vous,
-            'confirme'
-          );
-
-        });
+        return date.toLocaleDateString(
+          'fr-FR'
+        );
 
       }
-    );
+    },
 
+    {
+      field: 'heure_rendez_vous',
+      headerName: 'Heure',
+      sortable: true,
+      filter: true,
 
-    btnAnnuler.addEventListener(
-      'click',
-      () => {
+      // Affiche uniquement
+      // les heures et les minutes
+      valueFormatter: (params: any) => {
 
-        this.ngZone.run(() => {
+        if (!params.value) {
+          return '';
+        }
 
-          this.changerStatutRendezVous(
-            params.data.id_rendez_vous,
-            'annule'
-          );
-
-        });
+        return params.value.slice(
+          0,
+          5
+        );
 
       }
-    );
+    },
+
+    {
+      field: 'statut',
+      headerName: 'Statut',
+      sortable: true,
+      filter: true,
+
+      // Affiche le statut
+      // avec un texte plus lisible
+      valueFormatter: (params: any) => {
+
+        if (params.value === 'en_attente') {
+          return 'En attente';
+        }
+
+        if (params.value === 'confirme') {
+          return 'Confirmé';
+        }
+
+        if (params.value === 'annule') {
+          return 'Annulé';
+        }
+
+        return params.value;
+
+      }
+    },
+
+    {
+      field: 'motif',
+      headerName: 'Motif',
+      sortable: true,
+      filter: true
+    },
+
+    {
+      headerName: 'Actions',
+
+      cellRenderer:
+        RendezVousActionsRenderer,
+
+      minWidth: 220,
+
+      sortable: false,
+
+      filter: false
+    }
+
+  ];
 
 
-    container.appendChild(
-      btnConfirmer
-    );
+  // Modifie le statut
+  // d'un rendez-vous
+  changerStatutRendezVous(
+    id: number,
+    statut: string,
+    onSuccess?: () => void
+  ) {
 
-    container.appendChild(
-      btnAnnuler
-    );
+    this.adminService
+      .updateStatutRendezVous(
+        id,
+        statut
+      )
+
+      .subscribe({
+
+        next: () => {
+
+          const index =
+            this.rendezVous.findIndex(
+
+              rendezVous =>
+                rendezVous.id_rendez_vous === id
+
+            );
 
 
-    return container;
+          if (index !== -1) {
+
+            // Modifie le statut
+            // dans le tableau
+            this.rendezVous[index].statut =
+              statut;
+
+
+            // Crée un nouveau tableau
+            // afin qu'Angular et AG Grid
+            // détectent la modification
+            this.rendezVous = [
+              ...this.rendezVous
+            ];
+
+          }
+
+
+          // Informe le renderer
+          // que la modification a réussi
+          if (onSuccess) {
+
+            onSuccess();
+
+          }
+
+
+          this.cdr.detectChanges();
+
+        }
+
+      });
 
   }
 
 }
-
-  ];
-changerStatutRendezVous(id: number, statut: string) {
-
-  this.adminService
-    .updateStatutRendezVous(id, statut)
-
-    .subscribe({
-
-      next: () => {
-
-        const index =
-          this.rendezVous.findIndex(
-            rendezVous =>
-              rendezVous.id_rendez_vous === id
-          );
-
-        if (index !== -1) {
-
-          this.rendezVous[index].statut = statut;
-
-          this.rendezVous = [
-            ...this.rendezVous
-          ];
-
-        }
-
-        this.cdr.detectChanges();
-
-      }
-
-    });
-
-}}

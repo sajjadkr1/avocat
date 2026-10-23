@@ -2,104 +2,346 @@
 
     <div class="login-card">
 
-        <h1>
-            Connexion
-        </h1>
 
-        <p class="subtitle">
-            Connectez-vous à votre compte
-        </p>
+        <!-- Onglets Connexion / Inscription -->
 
+        <div class="auth-tabs">
 
-        <!-- Email -->
-
-        <div class="input-group">
-
-            <label for="email">
-                Adresse email
-            </label>
-
-            <input
-                id="email"
-                [(ngModel)]="email"
-                type="email"
-                placeholder="Ex : nom@email.com"
-                autocomplete="email"
-                [class.error]="emailError"
-                [attr.aria-invalid]="emailError"
-                [attr.aria-describedby]="emailError ? 'email-error' : null"
+            <button
+                type="button"
+                class="auth-tab"
+                [class.active]="mode === 'login'"
+                (click)="mode = 'login'"
             >
+                Connexion
+            </button>
 
-            @if (emailError) {
 
-                <span
-                    id="email-error"
-                    class="error-message"
-                    role="alert"
-                >
-                    Email invalide
-                </span>
-
-            }
+            <button
+                type="button"
+                class="auth-tab"
+                [class.active]="mode === 'register'"
+                (click)="mode = 'register'"
+            >
+                S'inscrire
+            </button>
 
         </div>
 
 
-        <!-- Mot de passe -->
 
-        <div class="input-group">
+        <!-- ========================= -->
+        <!-- CONNEXION -->
+        <!-- ========================= -->
 
-            <label for="password">
-                Mot de passe
-            </label>
+        @if (mode === 'login') {
 
-            <input
-                id="password"
-                [(ngModel)]="password"
-                type="password"
-                placeholder="Votre mot de passe"
-                autocomplete="current-password"
-                [class.error]="passwordError"
-                [attr.aria-invalid]="passwordError"
-                [attr.aria-describedby]="passwordError ? 'password-error' : null"
-            >
+            <h1>
+                Connexion
+            </h1>
 
-            @if (passwordError) {
-
-                <span
-                    id="password-error"
-                    class="error-message"
-                    role="alert"
-                >
-                    Mot de passe invalide
-                    (8 caractères min, majuscule + chiffre)
-                </span>
-
-            }
-
-        </div>
-
-
-        <!-- Bouton de connexion -->
-
-        <button
-            type="button"
-            (click)="seConnecter()"
-        >
-            Se connecter
-        </button>
-
-
-        <!-- Message d'erreur envoyé par le serveur -->
-
-        @if (loginError) {
-
-            <p
-                class="login-error"
-                role="alert"
-            >
-                {{ loginError }}
+            <p class="subtitle">
+                Connectez-vous à votre compte
             </p>
+
+
+            <!-- Email -->
+
+            <div class="input-group">
+
+                <label for="email">
+                    Adresse email
+                </label>
+
+                <input
+                    id="email"
+                    [(ngModel)]="email"
+                    type="email"
+                    placeholder="Ex : nom@email.com"
+                    autocomplete="email"
+                    [class.error]="emailError"
+                    [attr.aria-invalid]="emailError"
+                    [attr.aria-describedby]="emailError ? 'email-error' : null"
+                >
+
+                @if (emailError) {
+
+                    <span
+                        id="email-error"
+                        class="error-message"
+                        role="alert"
+                    >
+                        Email invalide
+                    </span>
+
+                }
+
+            </div>
+
+
+            <!-- Mot de passe -->
+
+            <div class="input-group">
+
+                <label for="password">
+                    Mot de passe
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                        id="password"
+                        [(ngModel)]="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Votre mot de passe"
+                        autocomplete="current-password"
+                        [class.error]="passwordError"
+                        [attr.aria-invalid]="passwordError"
+                        [attr.aria-describedby]="passwordError ? 'password-error' : null"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        (click)="showPassword = !showPassword"
+                        aria-label="Afficher ou masquer le mot de passe"
+                    >
+
+                        <i
+                            class="fa-solid"
+                            [class.fa-eye]="!showPassword"
+                            [class.fa-eye-slash]="showPassword"
+                            aria-hidden="true"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+
+                @if (passwordError) {
+
+                    <span
+                        id="password-error"
+                        class="error-message"
+                        role="alert"
+                    >
+                        Mot de passe invalide
+                        (8 caractères min, majuscule + chiffre)
+                    </span>
+
+                }
+
+            </div>
+
+
+            <!-- Bouton connexion -->
+
+            <button
+                type="button"
+                class="auth-submit"
+                (click)="seConnecter()"
+            >
+                Se connecter
+            </button>
+
+
+            <!-- Message erreur serveur -->
+
+            @if (loginError) {
+
+                <p
+                    class="login-error"
+                    role="alert"
+                >
+                    {{ loginError }}
+                </p>
+
+            }
+
+        }
+
+
+
+        <!-- ========================= -->
+        <!-- INSCRIPTION -->
+        <!-- ========================= -->
+
+        @if (mode === 'register') {
+
+            <h1>
+                Créer un compte
+            </h1>
+
+            <p class="subtitle">
+                Créez votre compte LegalBridge
+            </p>
+
+
+            <!-- Nom -->
+
+            <div class="input-group">
+
+                <label for="registerNom">
+                    Nom
+                </label>
+
+                <input
+                    id="registerNom"
+                    [(ngModel)]="registerNom"
+                    type="text"
+                    placeholder="Votre nom"
+                    autocomplete="family-name"
+                >
+
+            </div>
+
+
+            <!-- Prénom -->
+
+            <div class="input-group">
+
+                <label for="registerPrenom">
+                    Prénom
+                </label>
+
+                <input
+                    id="registerPrenom"
+                    [(ngModel)]="registerPrenom"
+                    type="text"
+                    placeholder="Votre prénom"
+                    autocomplete="given-name"
+                >
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="input-group">
+
+                <label for="registerEmail">
+                    Adresse email
+                </label>
+
+                <input
+                    id="registerEmail"
+                    [(ngModel)]="registerEmail"
+                    type="email"
+                    placeholder="Ex : nom@email.com"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <!-- Mot de passe -->
+
+            <div class="input-group">
+
+                <label for="registerPassword">
+                    Mot de passe
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                        id="registerPassword"
+                        [(ngModel)]="registerPassword"
+                        [type]="showRegisterPassword ? 'text' : 'password'"
+                        placeholder="Créez votre mot de passe"
+                        autocomplete="new-password"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        (click)="showRegisterPassword = !showRegisterPassword"
+                        aria-label="Afficher ou masquer le mot de passe"
+                    >
+
+                        <i
+                            class="fa-solid"
+                            [class.fa-eye]="!showRegisterPassword"
+                            [class.fa-eye-slash]="showRegisterPassword"
+                            aria-hidden="true"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Confirmation mot de passe -->
+
+            <div class="input-group">
+
+                <label for="confirmPassword">
+                    Confirmer le mot de passe
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                        id="confirmPassword"
+                        [(ngModel)]="confirmPassword"
+                        [type]="showConfirmPassword ? 'text' : 'password'"
+                        placeholder="Confirmez votre mot de passe"
+                        autocomplete="new-password"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        (click)="showConfirmPassword = !showConfirmPassword"
+                        aria-label="Afficher ou masquer la confirmation du mot de passe"
+                    >
+
+                        <i
+                            class="fa-solid"
+                            [class.fa-eye]="!showConfirmPassword"
+                            [class.fa-eye-slash]="showConfirmPassword"
+                            aria-hidden="true"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Message d'erreur inscription -->
+
+            @if (registerError) {
+
+                <p
+                    class="login-error"
+                    role="alert"
+                >
+                    {{ registerError }}
+                </p>
+
+            }
+
+
+            <!-- Bouton inscription -->
+
+            <button
+                type="button"
+                class="auth-submit"
+                (click)="sInscrire()"
+            >
+                Créer mon compte
+            </button>
 
         }
 

@@ -371,3 +371,100 @@
     }
 
 }
+/* =========================
+   MOT DE PASSE
+========================= */
+
+.password-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.password-wrapper input {
+    width: 100%;
+
+    padding-right: 48px;
+}
+
+
+/* =========================
+   BOUTON AFFICHER / MASQUER
+========================= */
+
+/* =========================
+   CHAMP MOT DE PASSE
+========================= */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   ICÔNE AFFICHER / MASQUER
+========================= */
+
+.password-wrapper .password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 12px;
+
+    transform: translateY(-50%);
+
+    width: 30px;
+    height: 30px;
+
+    min-width: 0;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #555555;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    box-shadow: none;
+}
+
+
+.password-wrapper .password-toggle:hover {
+    background: transparent;
+
+    color: #b9975b;
+
+    transform: translateY(-50%);
+}
+
+
+.password-wrapper .password-toggle:active {
+    transform: translateY(-50%);
+}
+
+
+.password-wrapper .password-toggle:focus-visible {
+    outline: 2px solid #b9975b;
+    outline-offset: 2px;
+}

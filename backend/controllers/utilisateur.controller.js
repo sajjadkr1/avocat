@@ -6,15 +6,33 @@ const jwt = require('jsonwebtoken');
 // Création d'un nouvel utilisateur
 const registerUtilisateur = async (req, res) => {
 
-    // Récupérer les informations envoyées par l'utilisateur
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const email = req.body.email;
     const mot_de_passe = req.body.mot_de_passe;
-    const telephone = req.body.telephone;
 
-    // Hasher le mot de passe avant de l'enregistrer
-    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, 10);
+    const telephone =
+        req.body.telephone || null;
+
+
+    if (
+        !nom ||
+        !prenom ||
+        !email ||
+        !mot_de_passe
+    ) {
+        return res.status(400).json({
+            error: 'Tous les champs obligatoires doivent être remplis'
+        });
+    }
+
+
+    const mot_de_passe_hash =
+        await bcrypt.hash(
+            mot_de_passe,
+            10
+        );
+
 
     // Ajouter l'utilisateur dans la base de données
     dt.query(`

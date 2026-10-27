@@ -7,56 +7,69 @@ import { AvocatDetail } from './avocat-detail/avocat-detail';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { adminGuard } from './guards/admin.guard';
-
-
+import { AdminAvocats } from './admin/admin-avocats/admin-avocats';
+import { AdminAjouterAvocat } from './admin/admin-ajouter-avocat/admin-ajouter-avocat';
+import { AdminRendezVous } from './admin/admin-rendez-vous/admin-rendez-vous';
 export const routes: Routes = [
 
-    // Page d'accueil
-    {
-        path: '',
-        component: Accueil
-    },
+  {
+    path: '',
+    component: Accueil
+  },
 
+  {
+    path: 'avocats',
+    component: AvocatList
+  },
 
-    // Liste des avocats
-    {
-        path: 'avocats',
-        component: AvocatList
-    },
+  {
+    path: 'avocat/:id',
+    component: AvocatDetail
+  },
 
+  {
+    path: 'login',
+    component: Login
+  },
 
-    // Détail d'un avocat
-    {
-        path: 'avocat/:id',
-        component: AvocatDetail
-    },
+  {
+    path: 'contact',
+    component: Contact
+  },
 
+  {
+    path: 'about',
+    component: About
+  },
 
-    // Page de connexion
-    {
-        path: 'login',
-        component: Login
-    },
+  {
+    path: 'admin',
+    component: Admin,
+    canActivate: [adminGuard],
 
+   children: [
 
-    // Page de contact
-    {
-        path: 'contact',
-        component: Contact
-    },
+  {
+    path: '',
+    redirectTo: 'avocats',
+    pathMatch: 'full'
+  },
 
+  {
+    path: 'avocats',
+    component: AdminAvocats
+  },
 
-    // Page À propos
-    {
-        path: 'about',
-        component: About
-    },
+  {
+    path: 'ajouter-avocat',
+    component: AdminAjouterAvocat
+  },
 
-    // Admin page
-    {
-        path: 'admin',
-        component: Admin,
-        canActivate: [adminGuard]
-    }
+  {
+    path: 'rendez-vous',
+    component: AdminRendezVous
+  }
 
+]
+  }
 ];

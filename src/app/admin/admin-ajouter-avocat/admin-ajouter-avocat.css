@@ -1,0 +1,119 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+.admin-page {
+  max-width: 900px;
+}
+
+
+.page-header {
+  margin-bottom: 25px;
+}
+
+
+.page-header h1 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+
+  color: #292626;
+}
+
+
+.page-header p {
+  margin: 0;
+
+  color: #6b6b6b;
+}
+
+
+.form-card {
+  background-color: white;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e1e1e1;
+}
+
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+.form-group label {
+  font-weight: 600;
+
+  color: #444;
+}
+
+
+.form-group input {
+  height: 42px;
+
+  padding: 0 12px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 7px;
+
+  font-size: 15px;
+}
+
+
+.form-group input:focus {
+  outline: none;
+
+  border-color: #d5aa28;
+}
+
+
+.btn-primary {
+  background-color: #d5aa28;
+
+  color: #1f1f1f;
+
+  border: none;
+
+  padding: 12px 22px;
+
+  border-radius: 7px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+.btn-primary:hover {
+  background-color: #bf9720;
+}
+
+
+@media (max-width: 700px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

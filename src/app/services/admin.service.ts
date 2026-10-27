@@ -1,91 +1,123 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import {
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http';
+
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
+
+
 export class AdminService {
 
-    constructor(private http: HttpClient) {}
+  private apiUrl =
+    'http://localhost:5000/api/admin';
 
-    getAllAvocats() {
 
-        const token = localStorage.getItem('token');
+  constructor(
+    private http: HttpClient
+  ) {}
 
-        return this.http.get(
-            'http://localhost:5000/api/admin/avocats',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-    }
 
-    deleteAvocat(id: number) {
+  private getHeaders() {
 
-        const token = localStorage.getItem('token');
+    const token =
+      localStorage.getItem('token');
 
-        return this.http.delete(
-            `http://localhost:5000/api/admin/avocats/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-    }
-updateAvocat(id: number, avocat: any) {
-    const token = localStorage.getItem('token');
-    return this.http.put(
-        `http://localhost:5000/api/admin/avocats/${id}`,
-        avocat,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-    );
-}
-addAvocat(avocat: any) {
-    const token = localStorage.getItem('token');
 
-    return this.http.post(
-         'http://localhost:5000/api/admin/avocats',
-         avocat,
-         {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-         }
-    );
+    return new HttpHeaders({
+      Authorization:
+        `Bearer ${token}`
+    });
 
-}
-getAllRendezVous() {
-    const token = localStorage.getItem('token');
+  }
+
+
+  getAllAvocats() {
 
     return this.http.get(
-        'http://localhost:5000/api/admin/rendez-vous',
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
+      `${this.apiUrl}/avocats`,
+      {
+        headers: this.getHeaders()
+      }
     );
-}
-updateStatutRendezVous(id: number, statut: string) {
-    const token = localStorage.getItem('token');
+
+  }
+
+
+  deleteAvocat(id: number) {
+
+    return this.http.delete(
+      `${this.apiUrl}/avocats/${id}`,
+      {
+        headers: this.getHeaders()
+      }
+    );
+
+  }
+
+
+  updateAvocat(
+    id: number,
+    avocat: any
+  ) {
+
     return this.http.put(
-        `http://localhost:5000/api/admin/rendez-vous/${id}/statut`,
-        {
-            statut: statut
-        },
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
+      `${this.apiUrl}/avocats/${id}`,
+      avocat,
+      {
+        headers: this.getHeaders()
+      }
     );
-}
+
+  }
+
+
+  addAvocat(avocat: any) {
+
+    return this.http.post(
+      `${this.apiUrl}/avocats`,
+      avocat,
+      {
+        headers: this.getHeaders()
+      }
+    );
+
+  }
+
+
+  getAllRendezVous() {
+
+    return this.http.get(
+      `${this.apiUrl}/rendez-vous`,
+      {
+        headers: this.getHeaders()
+      }
+    );
+
+  }
+
+
+  updateStatutRendezVous(
+    id: number,
+    statut: string
+  ) {
+
+    return this.http.put(
+      `${this.apiUrl}/rendez-vous/${id}/statut`,
+
+      {
+        statut: statut
+      },
+
+      {
+        headers: this.getHeaders()
+      }
+
+    );
+
+  }
 
 }

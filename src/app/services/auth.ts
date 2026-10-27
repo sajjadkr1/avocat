@@ -9,47 +9,33 @@ import { HttpClient } from '@angular/common/http';
 
 export class Auth {
 
+  private apiUrl =
+    'http://localhost:5000/api/utilisateurs';
+
+
   constructor(
     private http: HttpClient
   ) {}
 
-
-  // =========================
-  // CONNEXION
-  // =========================
 
   login(
     email: string,
     password: string
   ) {
 
-    // Prépare les données
-    // de l'utilisateur
     const utilisateur = {
-
       email: email,
-
       mot_de_passe: password
-
     };
 
 
-    // Envoie les informations
-    // au backend
     return this.http.post<any>(
-
-      'http://localhost:5000/api/utilisateurs/login',
-
+      `${this.apiUrl}/login`,
       utilisateur
-
     );
 
   }
 
-
-  // =========================
-  // INSCRIPTION
-  // =========================
 
   register(
     nom: string,
@@ -58,29 +44,17 @@ export class Auth {
     password: string
   ) {
 
-    // Prépare les données
-    // du nouvel utilisateur
     const utilisateur = {
-
       nom: nom,
-
       prenom: prenom,
-
       email: email,
-
       mot_de_passe: password
-
     };
 
 
-    // Envoie les informations
-    // au backend
     return this.http.post<any>(
-
-      'http://localhost:5000/api/utilisateurs/register',
-
+      `${this.apiUrl}/register`,
       utilisateur
-
     );
 
   }

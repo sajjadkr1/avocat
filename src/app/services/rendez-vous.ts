@@ -1,47 +1,65 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
+
 export class RendezVous {
 
-  constructor(private http: HttpClient) {}
-        getMesRendezVous() {
+  private apiUrl =
+    'http://localhost:5000/api/rendez-vous';
 
-  const token = localStorage.getItem('token');
 
-  return this.http.get(
-    'http://localhost:5000/api/rendez-vous/mes-rendez-vous',
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
+  constructor(
+    private http: HttpClient
+  ) {}
 
-        }
-      
 
-  creerRendezVous(rendezvous: any) {
+  private getHeaders() {
 
-    // Récupère le token enregistré après connexion
-    const token = localStorage.getItem('token');
+    const token =
+      localStorage.getItem('token');
 
-    // Envoie le rendez-vous au backend avec le token
-    return this.http.post(
-      'http://localhost:5000/api/rendez-vous',
-      rendezvous,
+
+    return new HttpHeaders({
+      Authorization:
+        `Bearer ${token}`
+    });
+
+  }
+
+
+  getMesRendezVous() {
+
+    return this.http.get(
+      `${this.apiUrl}/mes-rendez-vous`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-
+        headers: this.getHeaders()
       }
-
     );
-            
+
+  }
+
+
+  creerRendezVous(
+    rendezvous: any
+  ) {
+
+    return this.http.post(
+      this.apiUrl,
+
+      rendezvous,
+
+      {
+        headers: this.getHeaders()
+      }
+    );
 
   }
 

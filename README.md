@@ -1,61 +1,61 @@
 # LegalBridge ⚖️
 
-## Plateforme de recherche d'avocats pour les étrangers en France
+LegalBridge est une application web développée pour aider les personnes étrangères en France à trouver plus facilement un avocat et à prendre rendez-vous selon leur besoin juridique.
 
-LegalBridge est une application web développée pour aider les personnes étrangères en France à trouver facilement un avocat adapté à leur situation juridique.
+## Fonctionnalités
 
-L'utilisateur peut sélectionner son problème administratif ou juridique, puis découvrir les avocats spécialisés disponibles selon le domaine recherché.
+- Inscription et connexion utilisateur
+- Authentification avec JWT
+- Consultation des avocats
+- Prise de rendez-vous
+- Consultation de ses rendez-vous
+- Espace administrateur
+- Ajout, modification et suppression des avocats
+- Gestion du statut des rendez-vous
 
----
-
-## 🎯 Objectif du projet
-
-Faciliter l'accès aux services juridiques pour les personnes qui ne maîtrisent pas parfaitement la langue française.
-
----
-
-## ✨ Fonctionnalités
-
-- Recherche d'avocats selon le problème juridique :
-  - Droit des étrangers
-  - Demande d'asile
-  - Droit du travail
-  - Logement
-
-- Affichage des informations des avocats :
-  - Nom
-  - Spécialité
-  - Ville
-  - Langues parlées
-
-- Interface simple et accessible.
-
----
-
-## 🛠️ Technologies utilisées
+## Technologies utilisées
 
 ### Frontend
-
 - Angular
 - TypeScript
-- HTML5
-- CSS3
+- HTML
+- CSS
 
-### Données
+### Backend
+- Node.js
+- Express.js
+- API REST
+- JWT
+- bcrypt
 
-- JSON Server (API REST locale)
+### Base de données
+- SQL
 
 ### Outils
-
 - Git
 - GitHub
+- Postman
+- Jest
 - Visual Studio Code
 
----
+## Tests
 
-## 🚀 Installation du projet
+Le projet contient des tests unitaires avec Jest.
 
-Cloner le projet :
+J’utilise également Postman pour tester manuellement les routes de l’API.
 
-```bash
-git clone https://github.com/sajjadkr1/avocat.git
+## Sécurité
+
+- Hashage des mots de passe avec bcrypt
+- Authentification avec JWT
+- Protection des routes administrateur
+- Validation des données côté serveur
+- Requêtes SQL paramétrées
+
+## Objectif du projet
+
+Ce projet m’a permis de développer une application full-stack avec Angular, Node.js, Express et SQL, tout en travaillant sur l’authentification, les API REST, la gestion des rendez-vous et l’administration.
+
+## Auteur
+
+Sajjad

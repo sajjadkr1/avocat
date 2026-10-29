@@ -3,32 +3,6 @@
     <div class="login-card">
 
 
-        <!-- Onglets Connexion / Inscription -->
-
-        <div class="auth-tabs">
-
-            <button
-                type="button"
-                class="auth-tab"
-                [class.active]="mode === 'login'"
-                (click)="mode = 'login'"
-            >
-                Connexion
-            </button>
-
-
-            <button
-                type="button"
-                class="auth-tab"
-                [class.active]="mode === 'register'"
-                (click)="mode = 'register'"
-            >
-                S'inscrire
-            </button>
-
-        </div>
-
-
 
         <!-- ========================= -->
         <!-- CONNEXION -->
@@ -146,6 +120,18 @@
             >
                 Se connecter
             </button>
+
+           <p class="register-prompt">
+            pas encore de compte ?
+            <button
+            type="button"
+            class="text-link"
+            (click)="mode = 'register'"
+            >
+            Créer un compte
+            
+            </button>
+           </p>
 
 
             <!-- Message erreur serveur -->

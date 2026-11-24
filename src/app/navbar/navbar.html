@@ -1,16 +1,19 @@
+
 <nav class="navbar" aria-label="Navigation principale">
 
     <!-- Logo -->
-    <a
-        class="logo"
-        routerLink="/"
-        aria-label="Retour à l'accueil"
-    >
-        <img
-            src="img/logo.png"
-            alt="LegalBridge"
+    @if (!isAdmin) {
+        <a
+            class="logo"
+            routerLink="/"
+            aria-label="Retour à l'accueil"
         >
-    </a>
+            <img
+                src="img/logo.png"
+                alt="LegalBridge"
+            >
+        </a>
+    }
 
     <!-- Liens de navigation -->
     <ul class="nav-links">

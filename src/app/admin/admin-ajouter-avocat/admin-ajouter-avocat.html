@@ -1,3 +1,4 @@
+
 <section class="admin-page">
 
   <div class="page-header">
@@ -11,11 +12,11 @@
 
   </div>
 
-
   <div class="form-card">
 
     <div class="form-grid">
 
+      <!-- Nom -->
       <div class="form-group">
 
         <label>Nom</label>
@@ -27,7 +28,7 @@
 
       </div>
 
-
+      <!-- Prénom -->
       <div class="form-group">
 
         <label>Prénom</label>
@@ -39,7 +40,7 @@
 
       </div>
 
-
+      <!-- Email -->
       <div class="form-group">
 
         <label>Email</label>
@@ -51,7 +52,7 @@
 
       </div>
 
-
+      <!-- Ville -->
       <div class="form-group">
 
         <label>Ville</label>
@@ -63,7 +64,7 @@
 
       </div>
 
-
+      <!-- Portable -->
       <div class="form-group">
 
         <label>Portable</label>
@@ -75,13 +76,162 @@
 
       </div>
 
+      <!-- Photo de l'avocat -->
+      <div class="form-group">
+
+        <label>Photo de l'avocat</label>
+
+        <input
+          #imageInput
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="selectionnerImage($event)"
+        >
+
+        @if (apercuImage) {
+
+          <div class="image-preview">
+
+            <img
+              [src]="apercuImage"
+              alt="Aperçu de la photo"
+            >
+
+            <button
+              type="button"
+              class="remove-image"
+              (click)="supprimerImage(imageInput)"
+            >
+              X
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- Spécialisations -->
+      <div
+        class="form-group dropdown-group"
+        (click)="$event.stopPropagation()"
+      >
+
+        <label>Spécialisations</label>
+
+        <button
+          type="button"
+          class="dropdown-trigger"
+          (click)="toggleMenu('specialisations')"
+        >
+
+          <span>
+            {{ getNomsSelectionnes('specialisations') || 'Choisir les spécialisations...' }}
+          </span>
+
+          <span class="arrow">
+            ▼
+          </span>
+
+        </button>
+
+        <div
+          class="dropdown-menu"
+          *ngIf="menuOuvert === 'specialisations'"
+        >
+
+          <label
+            class="dropdown-option"
+            *ngFor="let specialisation of specialisations"
+          >
+
+            <input
+              type="checkbox"
+              [checked]="nouvelAvocat.id_specialisations.includes(+specialisation.id_specialisation)"
+              (change)="modifierSelection('specialisations', specialisation.id_specialisation, $event)"
+            >
+
+            <span>
+              {{ specialisation.nom }}
+            </span>
+
+          </label>
+
+          <p
+            class="empty-message"
+            *ngIf="specialisations.length === 0"
+          >
+            Aucune spécialisation disponible
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- Langues -->
+      <div
+        class="form-group dropdown-group"
+        (click)="$event.stopPropagation()"
+      >
+
+        <label>Langues parlées</label>
+
+        <button
+          type="button"
+          class="dropdown-trigger"
+          (click)="toggleMenu('langues')"
+        >
+
+          <span>
+            {{ getNomsSelectionnes('langues') || 'Choisir les langues...' }}
+          </span>
+
+          <span class="arrow">
+            ▼
+          </span>
+
+        </button>
+
+        <div
+          class="dropdown-menu"
+          *ngIf="menuOuvert === 'langues'"
+        >
+
+          <label
+            class="dropdown-option"
+            *ngFor="let langue of langues"
+          >
+
+            <input
+              type="checkbox"
+              [checked]="nouvelAvocat.id_langues.includes(+langue.id_langue)"
+              (change)="modifierSelection('langues', langue.id_langue, $event)"
+            >
+
+            <span>
+              {{ langue.nom }}
+            </span>
+
+          </label>
+
+          <p
+            class="empty-message"
+            *ngIf="langues.length === 0"
+          >
+            Aucune langue disponible
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
 
-
+    <!-- Bouton Ajouter -->
     <button
-      class="btn-primary"
-      (click)="ajouterAvocat()"
-    >
+  class="btn-primary"
+  (click)="ajouterAvocat(imageInput)"
+>
       Ajouter l'avocat
     </button>
 

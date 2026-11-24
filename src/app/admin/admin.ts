@@ -20,4 +20,12 @@ import {
   styleUrl: './admin.css',
 })
 
-export class Admin {}
+export class Admin {
+
+  sidebarOpen = true;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+}

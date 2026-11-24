@@ -3,13 +3,17 @@ const cors = require('cors');
 const rendezVousRoutes = require('./routes/rendez-vous.routes');
 const avocatRoutes = require('./routes/avocat.routes');
 const adminRoutes = require('./routes/admin.routes');
-const utilisateurRoutes = require('./routes/utilisateur.routes')
+const utilisateurRoutes = require('./routes/utilisateur.routes');
+const path = require('path');
 
 const app = express();
 
 // Permet à Express de lire les données JSON
 app.use(express.json());
-
+app.use(
+    '/uploads',
+    express.static(path.join(__dirname, 'uploads'))
+);
 // Autorise le frontend Angular à communiquer avec notre API
 app.use(cors({
     origin: [

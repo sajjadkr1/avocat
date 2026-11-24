@@ -1,5 +1,4 @@
-const dt = require('../config/db');
-
+const avocatModel = require('../models/avocat.model');
 
 // Recherche des avocats
 const rechercherAvocats = (req, res) => {
@@ -21,57 +20,8 @@ const rechercherAvocats = (req, res) => {
     }
 
 
-    dt.query(`
-        SELECT
-            avocats.id_avocat,
-            avocats.nom,
-            avocats.prenom,
-            avocats.email,
-            avocats.ville,
-            avocats.portable,
-            avocats.adresse,
-            avocats.img,
-            avocats.description,
-            avocats.traducteur_disponible,
-
-            specialisations.nom AS specialisation,
-
-            GROUP_CONCAT(
-                DISTINCT langues.nom
-                SEPARATOR ','
-            ) AS langues
-
-        FROM avocats
-
-        JOIN exercer
-            ON avocats.id_avocat = exercer.id_avocat
-
-        JOIN specialisations
-            ON exercer.id_specialisation = specialisations.id_specialisation
-
-        LEFT JOIN parler
-            ON avocats.id_avocat = parler.id_avocat
-
-        LEFT JOIN langues
-            ON parler.id_langue = langues.id_langue
-
-        WHERE avocats.ville = ?
-        AND specialisations.nom = ?
-
-        GROUP BY
-            avocats.id_avocat,
-            avocats.nom,
-            avocats.prenom,
-            avocats.email,
-            avocats.ville,
-            avocats.portable,
-            avocats.adresse,
-            avocats.img,
-            avocats.description,
-            avocats.traducteur_disponible,
-            specialisations.nom
-
-    `, [ville, specialisation], (err, result) => {
+    
+    avocatModel.rechercherAvocats(ville, specialisation, (err, result) => {
 
         if (err) {
 
@@ -114,62 +64,8 @@ const rechercherAvocats = (req, res) => {
 const getAvocatById = (req, res) => {
 
     const id = req.params.id;
-
-
-    dt.query(`
-        SELECT
-            avocats.id_avocat,
-            avocats.nom,
-            avocats.prenom,
-            avocats.email,
-            avocats.ville,
-            avocats.portable,
-            avocats.adresse,
-            avocats.img,
-            avocats.description,
-            avocats.traducteur_disponible,
-
-            GROUP_CONCAT(
-                DISTINCT specialisations.nom
-                SEPARATOR ','
-            ) AS specialisation,
-
-            GROUP_CONCAT(
-                DISTINCT langues.nom
-                SEPARATOR ','
-            ) AS langues
-
-        FROM avocats
-
-        LEFT JOIN exercer
-            ON avocats.id_avocat = exercer.id_avocat
-
-        LEFT JOIN specialisations
-            ON exercer.id_specialisation = specialisations.id_specialisation
-
-        LEFT JOIN parler
-            ON avocats.id_avocat = parler.id_avocat
-
-        LEFT JOIN langues
-            ON parler.id_langue = langues.id_langue
-
-        WHERE avocats.id_avocat = ?
-
-        GROUP BY
-            avocats.id_avocat,
-            avocats.nom,
-            avocats.prenom,
-            avocats.email,
-            avocats.ville,
-            avocats.portable,
-            avocats.adresse,
-            avocats.img,
-            avocats.description,
-            avocats.traducteur_disponible
-
-    `, [id], (err, result) => {
-
-        if (err) {
+    avocatModel.getAvocatById(id, (err, result) => {
+if (err) {
 
             console.log(err);
 
@@ -178,8 +74,7 @@ const getAvocatById = (req, res) => {
             });
 
         }
-
-
+        
         if (result.length === 0) {
 
             return res.status(404).json({
@@ -187,8 +82,6 @@ const getAvocatById = (req, res) => {
             });
 
         }
-
-
         const avocat = result[0];
 
         // Transformer les langues en tableau
@@ -198,10 +91,10 @@ const getAvocatById = (req, res) => {
 
 
         res.json(avocat);
-
     });
 
-};
+            };
+
 
 
 module.exports = {

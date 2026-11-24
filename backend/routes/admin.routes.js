@@ -1,4 +1,5 @@
 const express = require('express');
+const upload = require('../middlewares/upload.middleware');
 
 const {
     verifierToken,
@@ -11,7 +12,9 @@ const {
     updateAvocat,
     addAvocat,
     getAllRendezVous,
-    updateStatutRendezVous
+    updateStatutRendezVous,
+    getAllSpecialisations,
+    getAllLangues
 } = require('../controllers/admin.controller');
 
 
@@ -50,6 +53,7 @@ router.post(
     '/avocats',
     verifierToken,
     verifierAdmin,
+    upload.single('img'),
     addAvocat
 );
 
@@ -69,6 +73,20 @@ router.put(
     verifierToken,
     verifierAdmin,
     updateStatutRendezVous
+);
+// Récupérer toutes les spécialisations
+router.get(
+    '/specialisations',
+    verifierToken,
+    verifierAdmin,
+    getAllSpecialisations
+);
+// Récupérer toutes les langues
+router.get(
+    '/langues',
+    verifierToken,
+    verifierAdmin,
+    getAllLangues
 );
 
 

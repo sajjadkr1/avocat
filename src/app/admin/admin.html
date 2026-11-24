@@ -1,4 +1,17 @@
-<div class="admin-layout">
+
+<div
+  class="admin-layout"
+  [class.sidebar-closed]="!sidebarOpen"
+>
+
+  <button
+    class="sidebar-toggle"
+    (click)="toggleSidebar()"
+    [attr.aria-expanded]="sidebarOpen"
+    aria-label="Afficher ou masquer le menu"
+  >
+    ☰
+  </button>
 
   <aside class="admin-sidebar">
 
@@ -6,7 +19,6 @@
       <h2>Administration</h2>
       <span>Espace administrateur</span>
     </div>
-
 
     <nav class="admin-nav">
 
@@ -17,14 +29,12 @@
         Gestion des avocats
       </a>
 
-
       <a
         routerLink="/admin/ajouter-avocat"
         routerLinkActive="active"
       >
         Ajouter un avocat
       </a>
-
 
       <a
         routerLink="/admin/rendez-vous"
@@ -37,11 +47,8 @@
 
   </aside>
 
-
   <main class="admin-content">
-
     <router-outlet></router-outlet>
-
   </main>
 
 </div>

@@ -1,6 +1,7 @@
 const dt = require('../config/db');
 
 
+
 // =========================
 // RÉCUPÉRER TOUS LES AVOCATS
 // =========================
@@ -46,52 +47,137 @@ const getAllAvocats = (req, res) => {
 // SUPPRIMER UN AVOCAT
 // =========================
 
+
 const deleteAvocat = (req, res) => {
 
-    const id =
-        req.params.id;
+    const id = req.params.id;
 
+    dt.beginTransaction((err) => {
 
-    dt.query(
-        `
-        DELETE FROM avocats
-        WHERE id_avocat = ?
-        `,
-        [id],
+        if (err) {
 
-        (err, result) => {
+            console.log(err);
 
-            if (err) {
-
-                console.log(err);
-
-                return res.status(500).json({
-                    error:
-                        'Erreur lors de la suppression de l’avocat'
-                });
-
-            }
-
-
-            if (
-                result.affectedRows === 0
-            ) {
-
-                return res.status(404).json({
-                    error:
-                        'Avocat non trouvé'
-                });
-
-            }
-
-
-            return res.status(200).json({
-                message:
-                    'Avocat supprimé avec succès'
+            return res.status(500).json({
+                error: 'Erreur lors de la transaction'
             });
 
         }
-    );
+
+        // Supprimer les spécialisations
+        dt.query(
+            `
+            DELETE FROM exercer
+            WHERE id_avocat = ?
+            `,
+            [id],
+            (err) => {
+
+                if (err) {
+
+                    return dt.rollback(() => {
+
+                        console.log(err);
+
+                        return res.status(500).json({
+                            error: 'Erreur lors de la suppression des spécialisations'
+                        });
+
+                    });
+
+                }
+
+                // Supprimer les langues
+                dt.query(
+                    `
+                    DELETE FROM parler
+                    WHERE id_avocat = ?
+                    `,
+                    [id],
+                    (err) => {
+
+                        if (err) {
+
+                            return dt.rollback(() => {
+
+                                console.log(err);
+
+                                return res.status(500).json({
+                                    error: 'Erreur lors de la suppression des langues'
+                                });
+
+                            });
+
+                        }
+
+                        // Supprimer l'avocat
+                        dt.query(
+                            `
+                            DELETE FROM avocats
+                            WHERE id_avocat = ?
+                            `,
+                            [id],
+                            (err, result) => {
+
+                                if (err) {
+
+                                    return dt.rollback(() => {
+
+                                        console.log(err);
+
+                                        return res.status(500).json({
+                                            error: 'Erreur lors de la suppression de l’avocat'
+                                        });
+
+                                    });
+
+                                }
+
+                                if (result.affectedRows === 0) {
+
+                                    return dt.rollback(() => {
+
+                                        return res.status(404).json({
+                                            error: 'Avocat non trouvé'
+                                        });
+
+                                    });
+
+                                }
+
+                                // Confirmer la transaction
+                                dt.commit((err) => {
+
+                                    if (err) {
+
+                                        return dt.rollback(() => {
+
+                                            console.log(err);
+
+                                            return res.status(500).json({
+                                                error: 'Erreur lors de la validation'
+                                            });
+
+                                        });
+
+                                    }
+
+                                    return res.status(200).json({
+                                        message: 'Avocat supprimé avec succès'
+                                    });
+
+                                });
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    });
 
 };
 
@@ -225,6 +311,53 @@ const updateAvocat = (req, res) => {
 
 };
 
+// =========================
+// RÉCUPÉRER LES SPÉCIALISATIONS
+// =========================
+const getAllSpecialisations = (req, res) => {
+
+    dt.query(
+        `
+        SELECT * FROM specialisations
+        `,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    error:
+                    'Erreur lors de la récupération des spécialisations'
+                });
+            }
+            return res.status(200).json(result);
+        }
+    );
+};
+
+// =========================
+// RÉCUPÉRER TOUTES LES LANGUES
+// =========================
+
+const getAllLangues = (req, res) => {
+    dt.query(
+        `
+        SELECT * FROM langues
+        `,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    error:
+                    'Erreur lors de la récupération des langues'
+                });
+            }
+            return res.status(200).json(result);
+        }
+    );
+};
+
+// =========================
+// AJOUTER UN AVOCAT
+// =========================
 
 // =========================
 // AJOUTER UN AVOCAT
@@ -232,21 +365,38 @@ const updateAvocat = (req, res) => {
 
 const addAvocat = (req, res) => {
 
-    const nom =
-        req.body.nom?.trim();
+    const nom = req.body.nom?.trim();
+    const prenom = req.body.prenom?.trim();
+    const email = req.body.email?.trim().toLowerCase();
+    const ville = req.body.ville?.trim();
+    const portable = req.body.portable?.trim();
 
-    const prenom =
-        req.body.prenom?.trim();
+    // Récupérer l'image
+    const img = req.file
+        ? `/uploads/${req.file.filename}`
+        : null;
 
-    const email =
-        req.body.email?.trim().toLowerCase();
+    // Récupérer les spécialisations et les langues
+    let id_specialisations;
+    let id_langues;
 
-    const ville =
-        req.body.ville?.trim();
+    try {
 
-    const portable =
-        req.body.portable?.trim();
+        id_specialisations = JSON.parse(
+            req.body.id_specialisations || '[]'
+        );
 
+        id_langues = JSON.parse(
+            req.body.id_langues || '[]'
+        );
+
+    } catch (error) {
+
+        return res.status(400).json({
+            error: 'Format des spécialisations ou langues invalide'
+        });
+
+    }
 
     // Vérifier les champs obligatoires
     if (
@@ -258,89 +408,229 @@ const addAvocat = (req, res) => {
     ) {
 
         return res.status(400).json({
-            error:
-                'Tous les champs doivent être remplis'
+            error: 'Tous les champs doivent être remplis'
         });
 
     }
 
-
-    const emailRegex =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
+    // Vérifier les spécialisations et les langues
     if (
-        !emailRegex.test(email)
+        !Array.isArray(id_specialisations) ||
+        !Array.isArray(id_langues) ||
+        !id_specialisations.every(id =>
+            Number.isInteger(id) && id > 0
+        ) ||
+        !id_langues.every(id =>
+            Number.isInteger(id) && id > 0
+        )
     ) {
 
         return res.status(400).json({
-            error:
-                'Adresse email invalide'
+            error: 'Spécialisations ou langues invalides'
         });
 
     }
 
+    // Supprimer les doublons
+    id_specialisations = [...new Set(id_specialisations)];
+    id_langues = [...new Set(id_langues)];
 
-    dt.query(
-        `
-        INSERT INTO avocats
-        (
-            nom,
-            prenom,
-            email,
-            ville,
-            portable
-        )
-        VALUES (?, ?, ?, ?, ?)
-        `,
-        [
-            nom,
-            prenom,
-            email,
-            ville,
-            portable
-        ],
+    // Vérifier l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        (err, result) => {
+    if (!emailRegex.test(email)) {
 
-            if (err) {
+        return res.status(400).json({
+            error: 'Adresse email invalide'
+        });
 
-                console.log(err);
+    }
 
+    // Commencer une transaction
+    dt.beginTransaction((err) => {
 
-                if (
-                    err.code ===
-                    'ER_DUP_ENTRY'
-                ) {
+        if (err) {
 
-                    return res.status(409).json({
-                        error:
-                            'Cet email est déjà utilisé'
+            console.log(err);
+
+            return res.status(500).json({
+                error: 'Erreur lors de la transaction'
+            });
+
+        }
+
+        // Ajouter l'avocat
+        dt.query(
+            `
+            INSERT INTO avocats
+            (
+                nom,
+                prenom,
+                email,
+                ville,
+                portable,
+                img
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            `,
+            [
+                nom,
+                prenom,
+                email,
+                ville,
+                portable,
+                img
+            ],
+
+            (err, result) => {
+
+                if (err) {
+
+                    return dt.rollback(() => {
+
+                        console.log(err);
+
+                        if (err.code === 'ER_DUP_ENTRY') {
+
+                            return res.status(409).json({
+                                error: 'Cet email est déjà utilisé'
+                            });
+
+                        }
+
+                        return res.status(500).json({
+                            error: 'Erreur lors de l’ajout de l’avocat'
+                        });
+
                     });
 
                 }
 
+                const idAvocat = result.insertId;
 
-                return res.status(500).json({
-                    error:
-                        'Erreur lors de l’ajout de l’avocat'
+                // Ajouter les spécialisations
+                const ajouterSpecialisations = (callback) => {
+
+                    if (id_specialisations.length === 0) {
+                        return callback(null);
+                    }
+
+                    const valeurs = id_specialisations.map(id => [
+                        idAvocat,
+                        id
+                    ]);
+
+                    dt.query(
+                        `
+                        INSERT INTO exercer
+                        (
+                            id_avocat,
+                            id_specialisation
+                        )
+                        VALUES ?
+                        `,
+                        [valeurs],
+                        callback
+                    );
+
+                };
+
+                // Ajouter les langues
+                const ajouterLangues = (callback) => {
+
+                    if (id_langues.length === 0) {
+                        return callback(null);
+                    }
+
+                    const valeurs = id_langues.map(id => [
+                        idAvocat,
+                        id
+                    ]);
+
+                    dt.query(
+                        `
+                        INSERT INTO parler
+                        (
+                            id_avocat,
+                            id_langue
+                        )
+                        VALUES ?
+                        `,
+                        [valeurs],
+                        callback
+                    );
+
+                };
+
+                // Enregistrer les spécialisations
+                ajouterSpecialisations((err) => {
+
+                    if (err) {
+
+                        return dt.rollback(() => {
+
+                            console.log(err);
+
+                            return res.status(500).json({
+                                error: 'Erreur lors de l’ajout des spécialisations'
+                            });
+
+                        });
+
+                    }
+
+                    // Enregistrer les langues
+                    ajouterLangues((err) => {
+
+                        if (err) {
+
+                            return dt.rollback(() => {
+
+                                console.log(err);
+
+                                return res.status(500).json({
+                                    error: 'Erreur lors de l’ajout des langues'
+                                });
+
+                            });
+
+                        }
+
+                        // Confirmer la transaction
+                        dt.commit((err) => {
+
+                            if (err) {
+
+                                return dt.rollback(() => {
+
+                                    console.log(err);
+
+                                    return res.status(500).json({
+                                        error: 'Erreur lors de la validation'
+                                    });
+
+                                });
+
+                            }
+
+                            return res.status(201).json({
+
+                                message: 'Avocat ajouté avec succès',
+
+                                id_avocat: idAvocat
+
+                            });
+
+                        });
+
+                    });
+
                 });
 
             }
+        );
 
-
-            return res.status(201).json({
-
-                message:
-                    'Avocat ajouté avec succès',
-
-                id_avocat:
-                    result.insertId
-
-            });
-
-        }
-    );
+    });
 
 };
 
@@ -404,10 +694,7 @@ const getAllRendezVous = (req, res) => {
 
             }
 
-
-            return res.status(200).json(
-                result
-            );
+            return res.status(200).json(result);
 
         }
     );
@@ -419,18 +706,10 @@ const getAllRendezVous = (req, res) => {
 // MODIFIER LE STATUT
 // =========================
 
-const updateStatutRendezVous = (
-    req,
-    res
-) => {
+const updateStatutRendezVous = (req, res) => {
 
-    const id =
-        req.params.id;
-
-
-    const statut =
-        req.body.statut;
-
+    const id = req.params.id;
+    const statut = req.body.statut;
 
     const statutsAutorises = [
         'en_attente',
@@ -438,20 +717,13 @@ const updateStatutRendezVous = (
         'annule'
     ];
 
-
-    if (
-        !statutsAutorises.includes(
-            statut
-        )
-    ) {
+    if (!statutsAutorises.includes(statut)) {
 
         return res.status(400).json({
-            error:
-                'Statut invalide'
+            error: 'Statut invalide'
         });
 
     }
-
 
     dt.query(
         `
@@ -477,18 +749,13 @@ const updateStatutRendezVous = (
 
             }
 
-
-            if (
-                result.affectedRows === 0
-            ) {
+            if (result.affectedRows === 0) {
 
                 return res.status(404).json({
-                    error:
-                        'Rendez-vous non trouvé'
+                    error: 'Rendez-vous non trouvé'
                 });
 
             }
-
 
             return res.status(200).json({
                 message:
@@ -507,5 +774,7 @@ module.exports = {
     updateAvocat,
     addAvocat,
     getAllRendezVous,
-    updateStatutRendezVous
+    updateStatutRendezVous,
+    getAllSpecialisations,
+    getAllLangues
 };

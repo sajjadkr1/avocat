@@ -412,3 +412,8 @@
     }
 
 }
+/* ADMIN NAVBAR */
+
+.navbar:has(.admin-link) .nav-links {
+    padding-left: 55px;
+}

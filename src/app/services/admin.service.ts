@@ -45,6 +45,22 @@ export class AdminService {
     );
 
   }
+  getAllSpecialisations() {
+    return this.http.get(
+      `${this.apiUrl}/specialisations`,
+      {
+        headers: this.getHeaders()
+      }
+    );
+  }
+  getAllLangues() {
+    return this.http.get(
+      `${this.apiUrl}/langues`,
+      {
+        headers: this.getHeaders()
+      }
+    );
+  }
 
 
   deleteAvocat(id: number) {
@@ -75,11 +91,11 @@ export class AdminService {
   }
 
 
-  addAvocat(avocat: any) {
+  addAvocat(formData: FormData) {
 
     return this.http.post(
       `${this.apiUrl}/avocats`,
-      avocat,
+      formData,
       {
         headers: this.getHeaders()
       }

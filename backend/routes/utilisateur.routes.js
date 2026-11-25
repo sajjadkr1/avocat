@@ -2,7 +2,9 @@ const express = require('express');
 
 const {
     registerUtilisateur,
-    loginUtilisateur
+    loginUtilisateur,
+    getProfilUtilisateur,
+    modifierProfilUtilisateur
 } = require('../controllers/utilisateur.controller');
 
 const {
@@ -18,6 +20,12 @@ router.post('/register', registerUtilisateur);
 
 // Connexion
 router.post('/login', loginUtilisateur);
+
+// Profil protégé par JWT
+router.get('/me', verifierToken, getProfilUtilisateur);
+
+// Modifier le profil
+router.put('/me', verifierToken, modifierProfilUtilisateur);
 
 
 // Profil protégé par JWT

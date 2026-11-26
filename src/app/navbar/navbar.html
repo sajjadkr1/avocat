@@ -3,15 +3,8 @@
 
     <!-- Logo -->
     @if (!isAdmin) {
-        <a
-            class="logo"
-            routerLink="/"
-            aria-label="Retour à l'accueil"
-        >
-            <img
-                src="img/logo.png"
-                alt="LegalBridge"
-            >
+        <a class="logo" routerLink="/" aria-label="Retour à l'accueil">
+            <img src="img/logo.png" alt="LegalBridge">
         </a>
     }
 
@@ -21,20 +14,14 @@
         @if (isLoginPage) {
 
             <li>
-                <a
-                    routerLink="/"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                >
+                <a routerLink="/" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     Accueil
                 </a>
             </li>
 
             <li>
-                <a
-                    routerLink="/about"
-                    routerLinkActive="active"
-                >
+                <a routerLink="/about" routerLinkActive="active">
                     À propos
                 </a>
             </li>
@@ -42,11 +29,8 @@
         } @else {
 
             <li>
-                <a
-                    routerLink="/"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                >
+                <a routerLink="/" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     Accueil
                 </a>
             </li>
@@ -54,28 +38,19 @@
             @if (!isAdmin) {
 
                 <li>
-                    <a
-                        routerLink="/avocats"
-                        routerLinkActive="active"
-                    >
+                    <a routerLink="/avocats" routerLinkActive="active">
                         Trouver un avocat
                     </a>
                 </li>
 
                 <li>
-                    <a
-                        routerLink="/contact"
-                        routerLinkActive="active"
-                    >
+                    <a routerLink="/contact" routerLinkActive="active">
                         Contact
                     </a>
                 </li>
 
                 <li>
-                    <a
-                        routerLink="/about"
-                        routerLinkActive="active"
-                    >
+                    <a routerLink="/about" routerLinkActive="active">
                         À propos
                     </a>
                 </li>
@@ -85,16 +60,14 @@
             @if (isLoggedIn && !isAdmin) {
 
                 <li>
-                    <a
-                        #mesRendezVousButton
+                    <a #mesRendezVousButton
                         class="nav-action"
                         (click)="ouvrirMesRendezVous()"
                         (keydown.enter)="ouvrirMesRendezVous()"
                         (keydown.space)="ouvrirMesRendezVous(); $event.preventDefault()"
                         tabindex="0"
                         role="button"
-                        [attr.aria-expanded]="afficherMesRendezVous"
-                    >
+                        [attr.aria-expanded]="afficherMesRendezVous">
                         Mes rendez-vous
                     </a>
                 </li>
@@ -104,11 +77,7 @@
             @if (isLoggedIn && isAdmin) {
 
                 <li>
-                    <a
-                        routerLink="/admin"
-                        routerLinkActive="active"
-                        class="admin-link"
-                    >
+                    <a routerLink="/admin" routerLinkActive="active" class="admin-link">
                         Tableau de bord
                     </a>
                 </li>
@@ -127,10 +96,17 @@
             @if (isLoggedIn) {
 
                 @if (isAdmin) {
-
                     <span class="admin-badge">
                         ADMIN
                     </span>
+                } @else {
+
+                    <a routerLink="/mon-compte"
+                        routerLinkActive="active"
+                        class="account-link">
+                        <i class="fa-solid fa-user" aria-hidden="true"></i>
+                        <span>Mon compte</span>
+                    </a>
 
                 }
 
@@ -139,31 +115,16 @@
                     type="button"
                     (click)="seDeconnecter()"
                     aria-label="Se déconnecter"
-                >
-                    <i
-                        class="fa-solid fa-arrow-right-from-bracket"
-                        aria-hidden="true"
-                    ></i>
-
-                    <span>
-                        Déconnexion
-                    </span>
+                    title="Se déconnecter">
+                    <i class="fa-solid fa-arrow-right-from-bracket"
+                        aria-hidden="true"></i>
                 </button>
 
             } @else {
 
-                <a
-                    routerLink="/login"
-                    class="login-button"
-                >
-                    <i
-                        class="fa-solid fa-user"
-                        aria-hidden="true"
-                    ></i>
-
-                    <span>
-                        Connexion
-                    </span>
+                <a routerLink="/login" class="login-button">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span>Connexion</span>
                 </a>
 
             }
@@ -175,14 +136,9 @@
     <!-- Fenêtre des rendez-vous -->
     @if (afficherMesRendezVous) {
 
-        <div
-            #rendezVousPopup
-            class="rendez-vous-popup"
-        >
+        <div #rendezVousPopup class="rendez-vous-popup">
 
-            <h2>
-                Mes rendez-vous
-            </h2>
+            <h2>Mes rendez-vous</h2>
 
             @if (mesRendezVous.length > 0) {
 
@@ -194,43 +150,28 @@
                     <div class="rendez-vous-item">
 
                         <p>
-                            <strong>
-                                Avocat :
-                            </strong>
-
+                            <strong>Avocat :</strong>
                             {{ $any(rendezVous).prenom }}
                             {{ $any(rendezVous).nom }}
                         </p>
 
                         <p>
-                            <strong>
-                                Date :
-                            </strong>
-
+                            <strong>Date :</strong>
                             {{ $any(rendezVous).date_rendez_vous }}
                         </p>
 
                         <p>
-                            <strong>
-                                Heure :
-                            </strong>
-
+                            <strong>Heure :</strong>
                             {{ $any(rendezVous).heure_rendez_vous }}
                         </p>
 
                         <p>
-                            <strong>
-                                Motif :
-                            </strong>
-
+                            <strong>Motif :</strong>
                             {{ $any(rendezVous).motif }}
                         </p>
 
                         <p>
-                            <strong>
-                                Statut :
-                            </strong>
-
+                            <strong>Statut :</strong>
                             {{ $any(rendezVous).statut }}
                         </p>
 

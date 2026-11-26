@@ -10,6 +10,9 @@ import { adminGuard } from './guards/admin.guard';
 import { AdminAvocats } from './admin/admin-avocats/admin-avocats';
 import { AdminAjouterAvocat } from './admin/admin-ajouter-avocat/admin-ajouter-avocat';
 import { AdminRendezVous } from './admin/admin-rendez-vous/admin-rendez-vous';
+import { authGuard } from './guards/auth.guard';
+import { MonCompte } from './components/mon-compte/mon-compte';
+
 export const routes: Routes = [
 
   {
@@ -71,5 +74,12 @@ export const routes: Routes = [
   }
 
 ]
-  }
+  },
+
+{
+  path: 'mon-compte',
+  component: MonCompte,
+  canActivate: [authGuard]
+},
+
 ];

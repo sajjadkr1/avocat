@@ -142,6 +142,36 @@
 
 
 /* ==========================
+   MON COMPTE
+========================== */
+
+.account-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+.account-link:hover,
+.account-link.active {
+    color: #d4af37;
+}
+
+.account-link i {
+    font-size: 17px;
+}
+
+
+/* ==========================
    BOUTON CONNEXION
 ========================== */
 
@@ -182,31 +212,40 @@
    BOUTON DÉCONNEXION
 ========================== */
 
+
 .logout-button {
     display: flex;
     align-items: center;
+    justify-content: center;
 
-    gap: 8px;
+    width: 38px;
+    height: 38px;
 
-    padding: 10px 16px;
+    padding: 0;
 
     border: 1px solid #d4af37;
     border-radius: 8px;
 
     background: transparent;
-
     color: #ffffff;
 
     cursor: pointer;
 
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
 
     transition:
         background-color 0.2s ease,
         color 0.2s ease,
         transform 0.2s ease;
 }
+
+.logout-button:hover {
+    background-color: #d4af37;
+    color: #2f2b2b;
+
+    transform: translateY(-1px);
+}
+
 
 
 .logout-button:hover {
@@ -341,12 +380,15 @@
     }
 
 
-    .login-button,
-    .logout-button {
-        padding: 9px 12px;
+    .login-button {
+    padding: 9px 12px;
+    font-size: 14px;
+}
 
-        font-size: 14px;
-    }
+.logout-button {
+    width: 36px;
+    height: 36px;
+}
 
 }
 

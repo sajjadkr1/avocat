@@ -43,6 +43,13 @@ export class Auth {
   });
   }
 
+  supprimerProfil() {
+
+    return this.http.delete(`${this.apiUrl}/me`, {
+      headers: this.getHeaders()
+    });
+  }
+
   login(
     email: string,
     password: string

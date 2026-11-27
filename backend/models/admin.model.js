@@ -1,3 +1,4 @@
+
 const BaseModel = require('./base.model');
 
 class AdminModel extends BaseModel {
@@ -5,10 +6,11 @@ class AdminModel extends BaseModel {
     constructor() {
         super();
     }
-     // Récupérer tous les avocats
-     getAllAvocats(callback) {
 
-         this.db.query(
+    // Récupérer tous les avocats
+    getAllAvocats(callback) {
+
+        this.db.query(
             `
             SELECT
                 id_avocat,
@@ -23,6 +25,7 @@ class AdminModel extends BaseModel {
         );
 
     }
+
     // Récupérer toutes les spécialisations
     getAllSpecialisations(callback) {
 
@@ -47,7 +50,6 @@ class AdminModel extends BaseModel {
 
     }
 
-     
     // Supprimer un avocat
     deleteAvocat(id, callback) {
 
@@ -113,69 +115,65 @@ class AdminModel extends BaseModel {
 
     }
 
-   
-  
-   
-// Modifier un avocat
-updateAvocat(id, donnees, callback) {
+    // Modifier un avocat
+    updateAvocat(id, donnees, callback) {
 
-    this.db.query(
-        `
-        SELECT id_avocat
-        FROM avocats
-        WHERE id_avocat = ?
-        `,
-        [id],
-        (err, result) => {
+        this.db.query(
+            `
+            SELECT id_avocat
+            FROM avocats
+            WHERE id_avocat = ?
+            `,
+            [id],
+            (err, result) => {
 
-            if (err) {
-                return callback(err);
-            }
+                if (err) {
+                    return callback(err);
+                }
 
-            // Vérifier si l'avocat existe
-            if (result.length === 0) {
-                return callback(null, {
-                    affectedRows: 0,
-                    avocatExiste: false
-                });
-            }
-
-            // Modifier l'avocat
-            this.db.query(
-                `
-                UPDATE avocats
-                SET
-                    nom = ?,
-                    prenom = ?,
-                    email = ?,
-                    ville = ?,
-                    portable = ?
-                WHERE id_avocat = ?
-                `,
-                [
-                    donnees.nom,
-                    donnees.prenom,
-                    donnees.email,
-                    donnees.ville,
-                    donnees.portable,
-                    id
-                ],
-                (err, result) => {
-
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    callback(null, {
-                        ...result,
-                        avocatExiste: true
+                // Vérifier si l'avocat existe
+                if (result.length === 0) {
+                    return callback(null, {
+                        affectedRows: 0,
+                        avocatExiste: false
                     });
                 }
-            );
-        }
-    );
-}
 
+                // Modifier l'avocat
+                this.db.query(
+                    `
+                    UPDATE avocats
+                    SET
+                        nom = ?,
+                        prenom = ?,
+                        email = ?,
+                        ville = ?,
+                        portable = ?
+                    WHERE id_avocat = ?
+                    `,
+                    [
+                        donnees.nom,
+                        donnees.prenom,
+                        donnees.email,
+                        donnees.ville,
+                        donnees.portable,
+                        id
+                    ],
+                    (err, result) => {
+
+                        if (err) {
+                            return callback(err);
+                        }
+
+                        callback(null, {
+                            ...result,
+                            avocatExiste: true
+                        });
+                    }
+                );
+            }
+        );
+    }
 
     // Ajouter un avocat avec ses spécialisations et ses langues
     addAvocat(donnees, id_specialisations, id_langues, callback) {
@@ -295,56 +293,64 @@ updateAvocat(id, donnees, callback) {
         });
     }
 
+    // Récupérer tous les rendez-vous
+    getAllRendezVous(callback) {
 
-// Récupérer tous les rendez-vous
-getAllRendezVous(callback) {
+        this.db.query(
+            `
+            SELECT
+                rendez_vous.id_rendez_vous,
+                rendez_vous.id_utilisateur,
 
-    this.db.query(
-        `
-        SELECT
-            rendez_vous.id_rendez_vous,
-            rendez_vous.id_utilisateur,
-            utilisateurs.nom AS nom_utilisateur,
-            utilisateurs.prenom AS prenom_utilisateur,
-            rendez_vous.id_avocat,
-            avocats.nom AS nom_avocat,
-            avocats.prenom AS prenom_avocat,
-            rendez_vous.date_rendez_vous,
-            rendez_vous.heure_rendez_vous,
-            rendez_vous.statut,
-            rendez_vous.motif,
-            rendez_vous.date_creation
-        FROM rendez_vous
-        JOIN utilisateurs
-            ON rendez_vous.id_utilisateur = utilisateurs.id_utilisateur
-        JOIN avocats
-            ON rendez_vous.id_avocat = avocats.id_avocat
-        ORDER BY rendez_vous.date_rendez_vous DESC
-        `,
-        callback
-    );
+                COALESCE(
+                    utilisateurs.nom,
+                    'Utilisateur supprimé'
+                ) AS nom_utilisateur,
+
+                COALESCE(
+                    utilisateurs.prenom,
+                    ''
+                ) AS prenom_utilisateur,
+
+                rendez_vous.id_avocat,
+                avocats.nom AS nom_avocat,
+                avocats.prenom AS prenom_avocat,
+                rendez_vous.date_rendez_vous,
+                rendez_vous.heure_rendez_vous,
+                rendez_vous.statut,
+                rendez_vous.motif,
+                rendez_vous.date_creation
+
+            FROM rendez_vous
+
+            LEFT JOIN utilisateurs
+                ON rendez_vous.id_utilisateur = utilisateurs.id_utilisateur
+
+            JOIN avocats
+                ON rendez_vous.id_avocat = avocats.id_avocat
+
+            ORDER BY rendez_vous.date_rendez_vous DESC
+            `,
+            callback
+        );
+
+    }
+
+    // Modifier le statut d'un rendez-vous
+    updateStatutRendezVous(id, statut, callback) {
+
+        this.db.query(
+            `
+            UPDATE rendez_vous
+            SET statut = ?
+            WHERE id_rendez_vous = ?
+            `,
+            [statut, id],
+            callback
+        );
+
+    }
 
 }
-
-
-// Modifier le statut d'un rendez-vous
-updateStatutRendezVous(id, statut, callback) {
-
-    this.db.query(
-        `
-        UPDATE rendez_vous
-        SET statut = ?
-        WHERE id_rendez_vous = ?
-        `,
-        [statut, id],
-        callback
-    );
-
-}
-
-
-
-     }
-
 
 module.exports = new AdminModel();

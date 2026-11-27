@@ -60,6 +60,17 @@ class UtilisateurModel extends BaseModel {
         callback
     );
     }
+// Supprimer un utilisateur
+supprimerUtilisateur(id_utilisateur, callback) {
+
+    this.db.query(
+        `DELETE FROM utilisateurs
+         WHERE id_utilisateur = ?`,
+        [id_utilisateur],
+        callback
+    );
+
+}
 
 }
 

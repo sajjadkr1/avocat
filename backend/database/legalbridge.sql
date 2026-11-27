@@ -144,7 +144,7 @@ DROP TABLE IF EXISTS `rendez_vous`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rendez_vous` (
   `id_rendez_vous` int NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` int NOT NULL,
+  `id_utilisateur` int DEFAULT NULL,
   `id_avocat` int NOT NULL,
   `date_rendez_vous` date NOT NULL,
   `heure_rendez_vous` time NOT NULL,

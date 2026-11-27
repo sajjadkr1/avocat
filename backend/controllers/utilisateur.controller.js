@@ -255,11 +255,52 @@ const modifierProfilUtilisateur = (req, res) => {
 
 };
 
+// Supprimer le compte de l'utilisateur connecté
+const supprimerProfilUtilisateur = (req, res) => {
+
+    const id_utilisateur = req.utilisateur.id_utilisateur;
+
+    utilisateurModel.supprimerUtilisateur(
+        id_utilisateur,
+        (err, result) => {
+
+            if (err) {
+
+                // Vérifier si l'utilisateur possède des rendez-vous
+                if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+                    return res.status(409).json({
+                        error: 'Impossible de supprimer votre compte car vous avez des rendez-vous associés'
+                    });
+                }
+
+                console.log(err);
+
+                return res.status(500).json({
+                    error: 'Erreur lors de la suppression du compte'
+                });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    error: 'Utilisateur introuvable'
+                });
+            }
+
+            return res.status(200).json({
+                message: 'Compte supprimé avec succès'
+            });
+
+        }
+    );
+
+};
+
 
 // Exporter les fonctions
 module.exports = {
     registerUtilisateur,
     loginUtilisateur,
     getProfilUtilisateur,
-    modifierProfilUtilisateur
+    modifierProfilUtilisateur,
+    supprimerProfilUtilisateur
 };

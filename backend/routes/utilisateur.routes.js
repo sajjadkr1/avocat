@@ -4,7 +4,8 @@ const {
     registerUtilisateur,
     loginUtilisateur,
     getProfilUtilisateur,
-    modifierProfilUtilisateur
+    modifierProfilUtilisateur,
+    supprimerProfilUtilisateur
 } = require('../controllers/utilisateur.controller');
 
 const {
@@ -26,6 +27,9 @@ router.get('/me', verifierToken, getProfilUtilisateur);
 
 // Modifier le profil
 router.put('/me', verifierToken, modifierProfilUtilisateur);
+
+// Supprimer le compte
+router.delete('/me', verifierToken, supprimerProfilUtilisateur);
 
 
 // Profil protégé par JWT

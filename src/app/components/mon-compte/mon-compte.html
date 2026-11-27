@@ -1,20 +1,137 @@
+
 <div class="mon-compte-container">
 
   <h2>Mon compte</h2>
 
   @if (utilisateur) {
-    <div class="profil-info">
 
-      <p><strong>Nom :</strong> {{ utilisateur.nom }}</p>
-      <p><strong>Prénom :</strong> {{ utilisateur.prenom }}</p>
-      <p><strong>Email :</strong> {{ utilisateur.email }}</p>
-      <p><strong>Téléphone :</strong> {{ utilisateur.telephone }}</p>
-      <p><strong>Rôle :</strong> {{ utilisateur.role }}</p>
-      <p><strong>Date de création :</strong> {{ utilisateur.date_creation }}</p>
+    @if (!modeModification) {
 
-    </div>
+      <div class="profil-info">
+
+        <p><strong>Nom :</strong> {{ utilisateur.nom }}</p>
+        <p><strong>Prénom :</strong> {{ utilisateur.prenom }}</p>
+        <p><strong>Email :</strong> {{ utilisateur.email }}</p>
+        <p><strong>Téléphone :</strong> {{ utilisateur.telephone }}</p>
+        <p><strong>Rôle :</strong> {{ utilisateur.role }}</p>
+        <p><strong>Date de création :</strong> {{ utilisateur.date_creation }}</p>
+
+      </div>
+
+      <button
+        class="btn-profil btn-modifier"
+        type="button"
+        (click)="activerModification()">
+        Modifier mon profil
+      </button>
+
+      <button
+  class="btn-profil btn-supprimer"
+  type="button"
+  (click)="supprimerCompte()"
+  [disabled]="suppressionEnCours">
+
+  {{ suppressionEnCours ? 'Suppression...' : 'Supprimer mon compte' }}
+
+</button>
+
+    } @else {
+
+      <form
+        class="profil-form"
+        #profilForm="ngForm"
+        (ngSubmit)="enregistrerModification(profilForm)">
+
+        <!-- NOM -->
+        <div>
+          <label for="nom">Nom :</label>
+          <input
+            id="nom"
+            type="text"
+            name="nom"
+            required
+            [(ngModel)]="utilisateurModifie.nom">
+        </div>
+
+        @if (profilForm.submitted && profilForm.controls['nom']?.invalid) {
+          <small class="error-message">
+            Le nom est obligatoire.
+          </small>
+        }
+
+        <!-- PRENOM -->
+        <div>
+          <label for="prenom">Prénom :</label>
+          <input
+            id="prenom"
+            type="text"
+            name="prenom"
+            required
+            [(ngModel)]="utilisateurModifie.prenom">
+        </div>
+
+        @if (profilForm.submitted && profilForm.controls['prenom']?.invalid) {
+          <small class="error-message">
+            Le prénom est obligatoire.
+          </small>
+        }
+
+        <!-- EMAIL -->
+        <div>
+          <label for="email">Email :</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            email
+            [(ngModel)]="utilisateurModifie.email">
+        </div>
+
+        @if (profilForm.submitted && profilForm.controls['email']?.errors?.['required']) {
+          <small class="error-message">
+            L'adresse e-mail est obligatoire.
+          </small>
+        }
+
+        @if (profilForm.submitted && profilForm.controls['email']?.errors?.['email']) {
+          <small class="error-message">
+            Veuillez saisir une adresse e-mail valide.
+          </small>
+        }
+
+        <!-- TELEPHONE -->
+        <div>
+          <label for="telephone">Téléphone :</label>
+          <input
+            id="telephone"
+            type="tel"
+            name="telephone"
+            [(ngModel)]="utilisateurModifie.telephone">
+        </div>
+
+        <!-- BOUTONS -->
+        <button
+          class="btn-profil btn-enregistrer"
+          type="submit">
+          Enregistrer
+        </button>
+
+        <button
+          class="btn-profil btn-annuler"
+          type="button"
+          (click)="annulerModification()">
+          Annuler
+        </button>
+
+      </form>
+
+    }
+
   } @else {
+
     <p>Chargement du profil...</p>
+
   }
 
 </div>
